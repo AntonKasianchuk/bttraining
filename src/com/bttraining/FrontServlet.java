@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class FrontServlet
  */
-@WebServlet(description = "Front controller for bttraining project", urlPatterns = { "/*" })
+@WebServlet(description = "Front controller for bttraining project", urlPatterns = { "/pay" })
 public class FrontServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
