@@ -23,8 +23,9 @@ public class CheckoutServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		BraintreeGateway gateway = Configuration.getBraintreeGateway();
 		String methodNonce = (String) request.getParameter("payment_method_nonce");
+		String amountString = (String) request.getParameter("amount");
 		TransactionRequest txRequest = new TransactionRequest().amount(
-				new BigDecimal("100.00")).paymentMethodNonce(methodNonce);
+				new BigDecimal(amountString)).paymentMethodNonce(methodNonce);
 
 		Result<Transaction> result = gateway.transaction().sale(txRequest);
 		
