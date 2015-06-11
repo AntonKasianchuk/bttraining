@@ -1,4 +1,4 @@
-package com.bttraining;
+package com.bttraining.servlet;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -14,6 +14,7 @@ import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.Result;
 import com.braintreegateway.Transaction;
 import com.braintreegateway.TransactionRequest;
+import com.bttraining.Configuration;
 
 @WebServlet(description = "Checkout controller", urlPatterns = { "/checkout" })
 public class CheckoutServlet extends HttpServlet {

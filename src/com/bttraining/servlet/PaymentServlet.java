@@ -1,4 +1,4 @@
-package com.bttraining;
+package com.bttraining.servlet;
 
 import java.io.IOException;
 
@@ -15,6 +15,7 @@ import com.braintreegateway.Customer;
 import com.braintreegateway.CustomerRequest;
 import com.braintreegateway.Result;
 import com.braintreegateway.ValidationErrors;
+import com.bttraining.Configuration;
 
 @WebServlet(description = "Payment controller", urlPatterns = { "/payment" })
 public class PaymentServlet extends HttpServlet {
