@@ -1,7 +1,6 @@
 package com.bttraining;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,17 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class FrontServlet
+ * Servlet implementation class GenerateTokenServlet
  */
-@WebServlet(description = "Front controller for bttraining project", urlPatterns = { "/pay" })
-public class FrontServlet extends HttpServlet {
+@WebServlet(description = "Controller for generating the token project", urlPatterns = { "/generate" })
+public class CheckoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public FrontServlet() {
-        // TODO Auto-generated constructor stub 
+    public CheckoutServlet() {
+        super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**

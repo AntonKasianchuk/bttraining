@@ -8,8 +8,8 @@ public class Configuration {
     public static BraintreeGateway getBraintreeGateway() {
         return new BraintreeGateway(
             Environment.SANDBOX,
-            "your_merchant_id",
-            "your_public_key",
-            "your_private_key");
+            "vbjt6q2zp8nq4vgh",
+            "7zyy96mftydc47sp",
+            "2a48f4b9a1ca941a4eec76eaca037d8e");
     }
 }
