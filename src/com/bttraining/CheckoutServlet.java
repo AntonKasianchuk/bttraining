@@ -28,7 +28,11 @@ public class CheckoutServlet extends HttpServlet {
 
 		Result<Transaction> result = gateway.transaction().sale(txRequest);
 		
-		request.setAttribute("result", result.toString());
+		String resultValue = "Failure";
+		if (result.isSuccess()) {
+			resultValue = "Success";
+		}
+		request.setAttribute("result", resultValue);
 
 		RequestDispatcher rd = request.getRequestDispatcher("view/result.jsp");
 		rd.forward(request, response);
