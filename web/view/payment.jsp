@@ -1,3 +1,7 @@
+<head>
+	<link rel="stylesheet" type="text/css" href="style/style.css"
+	media="screen" />
+</head>
 <body>
 	<form id="checkout" method="post" action="/bttraining/checkout">
 		<div id="payment-form"></div>
