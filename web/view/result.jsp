@@ -1,8 +1,7 @@
 <head>
-	<link rel="stylesheet" type="text/css" href="style/style.css"
+<link rel="stylesheet" type="text/css" href="style/style.css"
 	media="screen" />
 </head>
 <body>
-${result}
-
+	<div>${result}</div>
 </body>

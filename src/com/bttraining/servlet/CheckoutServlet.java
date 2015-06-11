@@ -32,7 +32,7 @@ public class CheckoutServlet extends HttpServlet {
 		
 		String resultValue = "Failure";
 		if (result.isSuccess()) {
-			resultValue = "Success";
+			resultValue = "Success transaction";
 		}
 		request.setAttribute("result", resultValue);
 
