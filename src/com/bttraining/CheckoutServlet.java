@@ -1,39 +1,37 @@
 package com.bttraining;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class GenerateTokenServlet
- */
-@WebServlet(description = "Controller for generating the token project", urlPatterns = { "/generate" })
+import com.braintreegateway.BraintreeGateway;
+import com.braintreegateway.Result;
+import com.braintreegateway.Transaction;
+import com.braintreegateway.TransactionRequest;
+
+@WebServlet(description = "Checkout controller", urlPatterns = { "/checkout" })
 public class CheckoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CheckoutServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		BraintreeGateway gateway = Configuration.getBraintreeGateway();
+		String methodNonce = (String) request.getParameter("payment_method_nonce");
+		TransactionRequest txRequest = new TransactionRequest().amount(
+				new BigDecimal("100.00")).paymentMethodNonce(methodNonce);
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		Result<Transaction> result = gateway.transaction().sale(txRequest);
+		
+		request.setAttribute("result", result.toString());
+
+		RequestDispatcher rd = request.getRequestDispatcher("view/result.jsp");
+		rd.forward(request, response);
 	}
 
 }

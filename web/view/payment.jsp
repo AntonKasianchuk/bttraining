@@ -1,5 +1,5 @@
 <body>
-	<form id="checkout" method="post" action="/checkout">
+	<form id="checkout" method="post" action="/bttraining/checkout">
 		<div id="payment-form"></div>
 		<input type="submit" value="Pay $10">
 	</form>
@@ -16,8 +16,10 @@
 		// own client token.
 		var clientToken = "${token}";
 
-		braintree.setup(clientToken, "dropin", {
+		var b = braintree.setup(clientToken, "dropin", {
 			container : "payment-form"
 		});
+		
+		x = 1;
 	</script>
 </body>
