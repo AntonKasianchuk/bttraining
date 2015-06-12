@@ -1,4 +1,4 @@
-package com.bttraining.servlet;
+package com.bttraining.web.servlet;
 
 import java.io.IOException;
 
@@ -16,26 +16,27 @@ import com.braintreegateway.CustomerRequest;
 import com.braintreegateway.Result;
 import com.braintreegateway.ValidationErrors;
 import com.bttraining.Configuration;
+import com.bttraining.service.PaymentService;
+import com.bttraining.service.impl.PaymentServiceImpl;
 
 @WebServlet(description = "Payment controller", urlPatterns = { "/payment" })
 public class PaymentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private PaymentService paymentService = new PaymentServiceImpl();
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		BraintreeGateway gateway = Configuration.getBraintreeGateway();
-		CustomerRequest customerRequest = createCustomerRequest(request);	
-		Result<Customer> result = gateway.customer().create(customerRequest);
 
+		CustomerRequest customerRequest = paymentService
+				.generateCustomerRequest(request);
+		Result<Customer> result = paymentService
+				.getCustomerResultByCustomerRequest(customerRequest);
 		RequestDispatcher rd;
-		if (result.isSuccess()) {			
+		if (result.isSuccess()) {
 			String customerId = result.getTarget().getId();
-			
-			// String clientToken = gateway.clientToken().generate();
-			ClientTokenRequest clientTokenRequest = new ClientTokenRequest()
-			.customerId(customerId);
-			String clientToken = gateway.clientToken().generate(clientTokenRequest);
-			
+
+			String clientToken = paymentService
+					.getClientTokenByCustomerId(customerId);
 			request.setAttribute("token", clientToken);
 			rd = request.getRequestDispatcher("view/payment.jsp");
 		} else {
@@ -43,17 +44,5 @@ public class PaymentServlet extends HttpServlet {
 			rd = request.getRequestDispatcher("view/result.jsp");
 		}
 		rd.forward(request, response);
-	}
-
-	private CustomerRequest createCustomerRequest(HttpServletRequest request) {
-		CustomerRequest customerRequest = new CustomerRequest();
-		customerRequest.firstName(request.getParameter("first_name"));
-		customerRequest.lastName(request.getParameter("last_name"));
-		customerRequest.company(request.getParameter("company"));
-		customerRequest.email(request.getParameter("email"));
-		customerRequest.phone(request.getParameter("phone"));
-		customerRequest.fax(request.getParameter("fax"));
-		customerRequest.website(request.getParameter("website"));
-		return customerRequest;
 	}
 }

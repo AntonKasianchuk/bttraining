@@ -1,4 +1,4 @@
-package com.bttraining.servlet;
+package com.bttraining.web.servlet;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -15,20 +15,24 @@ import com.braintreegateway.Result;
 import com.braintreegateway.Transaction;
 import com.braintreegateway.TransactionRequest;
 import com.bttraining.Configuration;
+import com.bttraining.service.CheckoutService;
+import com.bttraining.service.PaymentService;
+import com.bttraining.service.impl.CheckoutServiceImpl;
+import com.bttraining.service.impl.PaymentServiceImpl;
 
 @WebServlet(description = "Checkout controller", urlPatterns = { "/checkout" })
 public class CheckoutServlet extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
+	private CheckoutService checkoutService = new CheckoutServiceImpl();
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		BraintreeGateway gateway = Configuration.getBraintreeGateway();
-		String methodNonce = (String) request.getParameter("payment_method_nonce");
+		String methodNonce = (String) request
+				.getParameter("payment_method_nonce");
 		String amountString = (String) request.getParameter("amount");
-		TransactionRequest txRequest = new TransactionRequest().amount(
-				new BigDecimal(amountString)).paymentMethodNonce(methodNonce);
-
-		Result<Transaction> result = gateway.transaction().sale(txRequest);
+		Result<Transaction> result = checkoutService
+				.doTransactionByMethodNonceAndAmount(methodNonce, amountString);
 		
 		String resultValue = "Failure";
 		if (result.isSuccess()) {
