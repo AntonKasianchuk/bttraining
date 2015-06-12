@@ -1,9 +1,9 @@
-package com.bttraining;
+package com.bttraining.configuration;
 
 import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.Environment;
 
-public class Configuration {
+public class Configurator {
 
     public static BraintreeGateway getBraintreeGateway() {
         return new BraintreeGateway(

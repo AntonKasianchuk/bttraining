@@ -3,7 +3,7 @@ package com.bttraining.web.dto;
 public class CustomerDTO {
 
 	private String firstName;
-	private String last_name;
+	private String lastName;
 	private String company;
 	private String email;
 	private String phone;
@@ -15,12 +15,6 @@ public class CustomerDTO {
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
-	}
-	public String getLast_name() {
-		return last_name;
-	}
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
 	}
 	public String getCompany() {
 		return company;
@@ -51,5 +45,11 @@ public class CustomerDTO {
 	}
 	public void setWebsite(String website) {
 		this.website = website;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 }

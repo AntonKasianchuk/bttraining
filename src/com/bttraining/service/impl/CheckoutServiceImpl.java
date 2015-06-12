@@ -6,12 +6,12 @@ import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.Result;
 import com.braintreegateway.Transaction;
 import com.braintreegateway.TransactionRequest;
-import com.bttraining.Configuration;
+import com.bttraining.configuration.Configurator;
 import com.bttraining.service.CheckoutService;
 
 public class CheckoutServiceImpl implements CheckoutService {
 
-	private BraintreeGateway gateway = Configuration.getBraintreeGateway();
+	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
 
 	@Override
 	public Result<Transaction> doTransactionByMethodNonceAndAmount(
@@ -21,5 +21,4 @@ public class CheckoutServiceImpl implements CheckoutService {
 		Result<Transaction> result = gateway.transaction().sale(txRequest);
 		return result;
 	}
-
 }

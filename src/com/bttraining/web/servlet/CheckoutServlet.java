@@ -1,7 +1,6 @@
 package com.bttraining.web.servlet;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,15 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.Result;
 import com.braintreegateway.Transaction;
-import com.braintreegateway.TransactionRequest;
-import com.bttraining.Configuration;
 import com.bttraining.service.CheckoutService;
-import com.bttraining.service.PaymentService;
 import com.bttraining.service.impl.CheckoutServiceImpl;
-import com.bttraining.service.impl.PaymentServiceImpl;
 
 @WebServlet(description = "Checkout controller", urlPatterns = { "/checkout" })
 public class CheckoutServlet extends HttpServlet {
@@ -33,15 +27,13 @@ public class CheckoutServlet extends HttpServlet {
 		String amountString = (String) request.getParameter("amount");
 		Result<Transaction> result = checkoutService
 				.doTransactionByMethodNonceAndAmount(methodNonce, amountString);
-		
+
 		String resultValue = "Failure";
 		if (result.isSuccess()) {
 			resultValue = "Success transaction";
 		}
 		request.setAttribute("result", resultValue);
-
 		RequestDispatcher rd = request.getRequestDispatcher("view/result.jsp");
 		rd.forward(request, response);
 	}
-
 }
