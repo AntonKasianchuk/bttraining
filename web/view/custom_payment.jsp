@@ -6,7 +6,7 @@
 <body>
 	<h1>Braintree Payment Form</h1>
 	<div>
-		<form action="/bttraining/checkout" method="POST"
+		<form action="/bttraining/payment" method="POST"
 			id="braintree-payment-form">
 			<p>
 				<label>Card Number</label> <input type="text" size="20"

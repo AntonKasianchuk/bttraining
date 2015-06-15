@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(description = "Choose form controller", urlPatterns = { "/paymentForm" })
-public class ChooseFormServlet extends HttpServlet {
+public class PaymentDispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -20,7 +20,7 @@ public class ChooseFormServlet extends HttpServlet {
 		if ("custom".equalsIgnoreCase(paymentForm)) {
 			viewPath = "view/custom_payment.jsp";
 		} else {
-			viewPath = "view/payment.jsp";
+			viewPath = "view/dropin_payment.jsp";
 		}
 		request.setAttribute("token", request.getParameter("token"));
 		rd = request.getRequestDispatcher(viewPath);
