@@ -34,10 +34,11 @@ public class PaymentServlet extends HttpServlet {
 				.getCustomerResultByCustomerRequest(customerRequest);
 		RequestDispatcher rd;
 		String viewPath;
+		
 		if (result.isSuccess()) {
 			String clientToken = paymentService.getClientTokenByResult(result);
 			request.setAttribute("token", clientToken);
-			viewPath = "view/payment.jsp";
+			viewPath = "view/choose_payment_form.jsp";
 		} else {
 			request.setAttribute("result", "Error. Check input parameters.");
 			viewPath = "view/result.jsp";
