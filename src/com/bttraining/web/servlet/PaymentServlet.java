@@ -39,7 +39,7 @@ public class PaymentServlet extends HttpServlet {
 			request.setAttribute("transactionStatus", transactionStatus);
 			rd = request.getRequestDispatcher("view/confirmPayment.jsp");
 		} else {
-			rd = request.getRequestDispatcher("view/confirmPayment.jsp");
+			rd = request.getRequestDispatcher("view/result.jsp");
 		}
 		request.setAttribute("result", resultValue);
 		rd.forward(request, response);
