@@ -29,8 +29,8 @@ public class PaymentServlet extends HttpServlet {
 		Result<Transaction> result = checkoutService
 				.doTransactionByMethodNonceAndAmount(methodNonce, amountString);
 		
-		String transactionId = result.getTransaction().getId();
-		String transactionStatus = result.getTransaction().getStatus().toString();
+		String transactionId = result.getTarget().getId();
+		String transactionStatus = result.getTarget().getStatus().toString();
 		String resultValue = "Failure";
 		RequestDispatcher rd;
 		if (result.isSuccess()) {
