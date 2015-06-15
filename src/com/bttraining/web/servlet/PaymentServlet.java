@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.braintreegateway.Result;
 import com.braintreegateway.Transaction;
+import com.braintreegateway.Transaction.Status;
 import com.bttraining.service.PaymentService;
 import com.bttraining.service.impl.PaymentServiceImpl;
 
@@ -27,13 +28,20 @@ public class PaymentServlet extends HttpServlet {
 		String amountString = (String) request.getParameter("amount");
 		Result<Transaction> result = checkoutService
 				.doTransactionByMethodNonceAndAmount(methodNonce, amountString);
-
+		
+		String transactionId = result.getTransaction().getId();
+		String transactionStatus = result.getTransaction().getStatus().toString();
 		String resultValue = "Failure";
+		RequestDispatcher rd;
 		if (result.isSuccess()) {
 			resultValue = "Success transaction";
+			request.setAttribute("transactionId", transactionId);
+			request.setAttribute("transactionStatus", transactionStatus);
+			rd = request.getRequestDispatcher("view/confirmPayment.jsp");
+		} else {
+			rd = request.getRequestDispatcher("view/confirmPayment.jsp");
 		}
 		request.setAttribute("result", resultValue);
-		RequestDispatcher rd = request.getRequestDispatcher("view/result.jsp");
 		rd.forward(request, response);
 	}
 }
