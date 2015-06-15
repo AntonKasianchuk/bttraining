@@ -17,7 +17,7 @@
 					data-braintree-name="cvv" />
 			</p>
 			<p>
-				<label>Expiration (MM/YY)</label> <input type="text" size="2"
+				<label>Expiration (MM/YY)</label> <input type="text" size="4"
 					data-braintree-name="expiration_date" />
 			</p>
 			Amount <input type="text" name="amount"> $ <input
