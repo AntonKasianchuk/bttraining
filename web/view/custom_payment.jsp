@@ -8,22 +8,20 @@
 	<div>
 		<form action="/bttraining/checkout" method="POST"
 			id="braintree-payment-form">
-			<div id="payment-form"></div>
 			<p>
 				<label>Card Number</label> <input type="text" size="20"
-					autocomplete="off" data-encrypted-name="number" />
+					autocomplete="off" data-braintree-name="number" />
 			</p>
 			<p>
 				<label>CVV</label> <input type="text" size="4" autocomplete="off"
-					data-encrypted-name="cvv" />
+					data-braintree-name="cvv" />
 			</p>
 			<p>
-				<label>Expiration (MM/YYYY)</label> <input type="text" size="2"
-					data-encrypted-name="month" /> / <input type="text" size="4"
-					data-encrypted-name="year" />
+				<label>Expiration (MM/YY)</label> <input type="text" size="2"
+					data-braintree-name="expiration_date" />
 			</p>
 			Amount <input type="text" name="amount"> $ <input
-				type="submit" value="Pay">
+				type="submit" id="submit" value="Pay">
 		</form>
 	</div>
 
@@ -33,7 +31,7 @@
 		var clientToken = "${token}";
 
 		var b = braintree.setup(clientToken, "custom", {
-			container : "payment-form"
+			id : "braintree-payment-form"
 		});
 	</script>
 </body>
