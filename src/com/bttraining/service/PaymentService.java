@@ -1,5 +1,7 @@
 package com.bttraining.service;
 
+import java.util.Set;
+
 import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Result;
 import com.braintreegateway.Transaction;
@@ -13,6 +15,6 @@ public interface PaymentService {
 
 	Result<Transaction> submitTransactionForSettlement(String transactionId);
 
-	ResourceCollection<Transaction> getTransactionsByCustomerId(
+	Set<Transaction> getTransactionsByCustomerId(
 			String customerId);
 }

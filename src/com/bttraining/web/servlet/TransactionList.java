@@ -1,6 +1,7 @@
 package com.bttraining.web.servlet;
 
 import java.io.IOException;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,7 +27,7 @@ public class TransactionList extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String customerId = request.getParameter("customerId");
 
-		ResourceCollection<Transaction> transactions = paymentService
+		Set<Transaction> transactions = paymentService
 				.getTransactionsByCustomerId(customerId);
 		RequestDispatcher rd = request
 				.getRequestDispatcher("view/transaction_list.jsp");

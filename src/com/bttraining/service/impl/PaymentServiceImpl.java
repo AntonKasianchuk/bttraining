@@ -1,6 +1,8 @@
 package com.bttraining.service.impl;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.ResourceCollection;
@@ -37,12 +39,18 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public ResourceCollection<Transaction> getTransactionsByCustomerId(
+	public Set<Transaction> getTransactionsByCustomerId(
 			String customerId) {
 		TransactionSearchRequest transactionSearchRequest = new TransactionSearchRequest()
 				.customerId().is(customerId);
-		ResourceCollection<Transaction> transactions = gateway.transaction()
+		ResourceCollection<Transaction> resourceTransactions = gateway.transaction()
 				.search(transactionSearchRequest);
+		Set<Transaction> transactions = new HashSet<Transaction>();
+		for (Transaction resourceTransaction : resourceTransactions) {
+			String transactionId = resourceTransaction.getId();
+			Transaction transaction = gateway.transaction().find(transactionId);
+			transactions.add(transaction);
+		}
 		return transactions;
 	}
 }
