@@ -9,11 +9,18 @@
 <body>
 	<form id="payment" method="post" action="/bttraining/existedCustomer">
 		<table>
+				<tr>
+					<th>customerId</th>
+					<th>Customer Details</th>
+					<th>Customer Transactions</th>
+				</tr>
 			<c:forEach items="${customerIds}" var="customerId">
 				<tr>
-					<td>Customer Id</td>
-					<td colspan="2"><a
-						href="/bttraining/edit_customer?customerId=${customerId}">${customerId}</a></td>
+					<td>${customerId}</td>
+					<td><a
+						href="/bttraining/editCustomer?customerId=${customerId}">Edit</a></td>
+					<td><a
+						href="/bttraining/transactionsList?customerId=${customerId}">View</a></td>
 				</tr>
 			</c:forEach>
 		</table>
