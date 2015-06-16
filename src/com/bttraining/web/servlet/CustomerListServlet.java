@@ -22,7 +22,7 @@ import com.bttraining.service.impl.RegisterServiceImpl;
 /**
  * Servlet implementation class CustomerListServlet
  */
-@WebServlet("/customer_list")
+@WebServlet("/customerList")
 public class CustomerListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CustomerService customerService = new CustomerServiceImp();
