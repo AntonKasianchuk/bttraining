@@ -7,4 +7,8 @@ public interface PaymentService {
 
 	Result<Transaction> doTransactionByMethodNonceAndAmount(String methodNonce,
 			String amountString);
+	
+	Result<Transaction> voidTransaction(String transactionId);
+
+	Result<Transaction> submitTransactionForSettlement(String transactionId);
 }

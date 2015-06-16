@@ -21,4 +21,16 @@ public class PaymentServiceImpl implements PaymentService {
 		Result<Transaction> result = gateway.transaction().sale(txRequest);
 		return result;
 	}
+
+	@Override
+	public Result<Transaction> submitTransactionForSettlement(String transactionId) {
+		Result<Transaction> result = gateway.transaction().submitForSettlement(transactionId);
+		return result;
+	}
+
+	@Override
+	public Result<Transaction> voidTransaction(String transactionId) {
+		Result<Transaction> result = gateway.transaction().voidTransaction(transactionId);
+		return result;
+	}
 }
