@@ -10,11 +10,13 @@ import com.braintreegateway.CustomerSearchRequest;
 import com.braintreegateway.ResourceCollection;
 import com.bttraining.configuration.Configurator;
 import com.bttraining.service.CustomerService;
+import com.bttraining.util.converter.CustomerConverter;
+import com.bttraining.web.dto.CustomerDTO;
 
 public class CustomerServiceImp implements CustomerService {
-
 	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
-
+	private CustomerConverter customerConverter = new CustomerConverter();
+	
 	@Override
 	public ResourceCollection<Customer> getAllCustomers() {
 		CustomerSearchRequest request = new CustomerSearchRequest().id().is(
@@ -34,4 +36,19 @@ public class CustomerServiceImp implements CustomerService {
 		return customerIds;
 	}
 
+	@Override
+	public ResourceCollection<Customer> getCustomerById(String customerId) {
+		CustomerSearchRequest request = new CustomerSearchRequest().id().is(customerId);
+		ResourceCollection<Customer> collection = gateway.customer().search(
+				request);
+		return collection;
+	}
+
+	@Override
+	public CustomerDTO getCustomerDTOById(String customerId) {
+		ResourceCollection<Customer> customerCollection = getCustomerById(customerId);
+		Customer customer = customerCollection.getFirst();
+		CustomerDTO customerDTO = customerConverter.generateCustomerDTO(customer);
+		return customerDTO;
+	}
 }
