@@ -3,5 +3,6 @@
 	media="screen" />
 </head>
 <body>
+Payment current status - ${transactionStatus}.
 	<div>${result}</div>
 </body>
