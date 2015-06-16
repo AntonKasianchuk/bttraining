@@ -10,7 +10,7 @@
 	<form id="payment" method="post" action="/bttraining/existedCustomer">
 		<table>
 				<tr>
-					<th>customerId</th>
+					<th>CustomerId</th>
 					<th>Customer Details</th>
 					<th>Customer Transactions</th>
 				</tr>
@@ -18,7 +18,7 @@
 				<tr>
 					<td>${customerId}</td>
 					<td><a
-						href="/bttraining/editCustomer?customerId=${customerId}">Edit</a></td>
+						href="/bttraining/customerDetails?customerId=${customerId}">Edit</a></td>
 					<td><a
 						href="/bttraining/transactionsList?customerId=${customerId}">View</a></td>
 				</tr>
