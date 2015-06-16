@@ -18,14 +18,14 @@ import com.bttraining.service.impl.PaymentServiceImpl;
 public class PaymentServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private PaymentService checkoutService = new PaymentServiceImpl();
+	private PaymentService paymentService = new PaymentServiceImpl();
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String methodNonce = (String) request
 				.getParameter("payment_method_nonce");
 		String amountString = (String) request.getParameter("amount");
-		Result<Transaction> result = checkoutService
+		Result<Transaction> result = paymentService
 				.doTransactionByMethodNonceAndAmount(methodNonce, amountString);
 		
 		String transactionId = result.getTarget().getId();

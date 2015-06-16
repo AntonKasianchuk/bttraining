@@ -20,7 +20,7 @@ import com.bttraining.web.dto.CustomerDTO;
 @WebServlet(description = "Payment controller", urlPatterns = { "/register" })
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private RegisterService paymentService = new RegisterServiceImpl();
+	private RegisterService registerService = new RegisterServiceImpl();
 	private CustomerConverter customerConverter = new CustomerConverter();
 
 	protected void doPost(HttpServletRequest request,
@@ -28,15 +28,15 @@ public class RegisterServlet extends HttpServlet {
 
 		CustomerDTO customerDTO = customerConverter
 				.generateCustomerDTO(request);
-		CustomerRequest customerRequest = paymentService
+		CustomerRequest customerRequest = registerService
 				.generateCustomerRequest(customerDTO);
-		Result<Customer> result = paymentService
+		Result<Customer> result = registerService
 				.getCustomerResultByCustomerRequest(customerRequest);
 		RequestDispatcher rd;
 		String viewPath;
 		
 		if (result.isSuccess()) {
-			String clientToken = paymentService.getClientTokenByResult(result);
+			String clientToken = registerService.getClientTokenByResult(result);
 			request.setAttribute("token", clientToken);
 			viewPath = "view/choose_payment_form.jsp";
 		} else {
