@@ -1,5 +1,9 @@
 package com.bttraining.service.impl;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.Customer;
 import com.braintreegateway.CustomerSearchRequest;
@@ -15,9 +19,19 @@ public class CustomerServiceImp implements CustomerService {
 	public ResourceCollection<Customer> getAllCustomers() {
 		CustomerSearchRequest request = new CustomerSearchRequest().id().is(
 				"");
-		ResourceCollection<Customer> collection = gateway.customer().search(
+		ResourceCollection<Customer> customers = gateway.customer().search(
 				request);
-		return collection;
+		return customers;
+	}
+
+	@Override
+	public Set<String> getCustomerIds() {
+		ResourceCollection<Customer> customers = getAllCustomers();
+		Set<String> customerIds = new HashSet<String>();
+		for (Customer customer : customers) {
+			customerIds.add(customer.getId());
+		}
+		return customerIds;
 	}
 
 }
