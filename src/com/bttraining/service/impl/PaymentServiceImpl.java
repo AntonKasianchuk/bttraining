@@ -3,9 +3,11 @@ package com.bttraining.service.impl;
 import java.math.BigDecimal;
 
 import com.braintreegateway.BraintreeGateway;
+import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Result;
 import com.braintreegateway.Transaction;
 import com.braintreegateway.TransactionRequest;
+import com.braintreegateway.TransactionSearchRequest;
 import com.bttraining.configuration.Configurator;
 import com.bttraining.service.PaymentService;
 
@@ -32,5 +34,15 @@ public class PaymentServiceImpl implements PaymentService {
 	public Result<Transaction> voidTransaction(String transactionId) {
 		Result<Transaction> result = gateway.transaction().voidTransaction(transactionId);
 		return result;
+	}
+
+	@Override
+	public ResourceCollection<Transaction> getTransactionsByCustomerId(
+			String customerId) {
+		TransactionSearchRequest transactionSearchRequest = new TransactionSearchRequest()
+				.customerId().is(customerId);
+		ResourceCollection<Transaction> transactions = gateway.transaction()
+				.search(transactionSearchRequest);
+		return transactions;
 	}
 }
