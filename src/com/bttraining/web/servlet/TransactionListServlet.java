@@ -34,7 +34,7 @@ public class TransactionListServlet extends HttpServlet {
 				.getRequestDispatcher("view/transaction_list.jsp");
 
 		request.setAttribute("transactions", transactionDTOs);
-		// request.setAttribute("transactionStatus", transactionStatus);
+		request.setAttribute("customerId",  customerId);
 		rd.forward(request, response);
 	}
 

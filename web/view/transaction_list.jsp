@@ -7,7 +7,7 @@
 <title>Customer transactions list</title>
 </head>
 <body>
-	<form id="payment" method="post" action="/bttraining/transactionEdit">
+	<form id="transactionList" method="get" action="/bttraining/createTransaction?customerId=${customerId}">
 		<table>
 			<tr>
 					<th>ID</th>
@@ -30,6 +30,9 @@
 					<td>${transaction.amount}</td>
 				</tr>
 			</c:forEach>
+			<tr>
+				<td colspan="7"><a
+						href="/bttraining/createTransaction?customerId=${customerId}">New transaction</a></td></td>
+			</tr>
 		</table>
-	</form>
 </body>
