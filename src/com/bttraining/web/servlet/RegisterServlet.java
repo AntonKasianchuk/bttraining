@@ -28,13 +28,13 @@ public class RegisterServlet extends HttpServlet {
 
 		CustomerDTO customerDTO = customerConverter
 				.generateCustomerDTO(request);
-		CustomerRequest customerRequest = registerService
+		CustomerRequest customerRequest = customerConverter
 				.generateCustomerRequest(customerDTO);
 		Result<Customer> result = registerService
 				.getCustomerResultByCustomerRequest(customerRequest);
+		
 		RequestDispatcher rd;
 		String viewPath;
-		
 		if (result.isSuccess()) {
 			String clientToken = registerService.getClientTokenByResult(result);
 			request.setAttribute("token", clientToken);

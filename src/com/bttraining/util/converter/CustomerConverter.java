@@ -3,7 +3,7 @@ package com.bttraining.util.converter;
 import javax.servlet.http.HttpServletRequest;
 
 import com.braintreegateway.Customer;
-import com.braintreegateway.CustomerGateway;
+import com.braintreegateway.CustomerRequest;
 import com.bttraining.web.dto.CustomerDTO;
 
 public class CustomerConverter {
@@ -30,5 +30,17 @@ public class CustomerConverter {
 		customerDTO.setFax(customer.getFax());
 		customerDTO.setWebsite(customer.getWebsite());
 		return customerDTO;
+	}
+	
+	public CustomerRequest generateCustomerRequest(CustomerDTO customerDTO) {
+		CustomerRequest customerRequest = new CustomerRequest();
+		customerRequest.firstName(customerDTO.getFirstName());
+		customerRequest.lastName(customerDTO.getLastName());
+		customerRequest.company(customerDTO.getCompany());
+		customerRequest.email(customerDTO.getEmail());
+		customerRequest.phone(customerDTO.getPhone());
+		customerRequest.fax(customerDTO.getFax());
+		customerRequest.website(customerDTO.getWebsite());
+		return customerRequest;
 	}
 }
