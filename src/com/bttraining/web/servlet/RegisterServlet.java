@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.braintreegateway.Customer;
 import com.braintreegateway.CustomerRequest;
 import com.braintreegateway.Result;
+import com.bttraining.service.CustomerService;
 import com.bttraining.service.RegisterService;
+import com.bttraining.service.impl.CustomerServiceImp;
 import com.bttraining.service.impl.RegisterServiceImpl;
 import com.bttraining.util.converter.CustomerConverter;
 import com.bttraining.web.dto.CustomerDTO;
@@ -21,6 +23,7 @@ import com.bttraining.web.dto.CustomerDTO;
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private RegisterService registerService = new RegisterServiceImpl();
+	private CustomerService customerService = new CustomerServiceImp();
 	private CustomerConverter customerConverter = new CustomerConverter();
 
 	protected void doPost(HttpServletRequest request,
@@ -30,9 +33,9 @@ public class RegisterServlet extends HttpServlet {
 				.generateCustomerDTO(request);
 		CustomerRequest customerRequest = customerConverter
 				.generateCustomerRequest(customerDTO);
-		Result<Customer> result = registerService
-				.getCustomerResultByCustomerRequest(customerRequest);
-		
+		Result<Customer> result = customerService
+				.createCustomer(customerRequest);
+
 		RequestDispatcher rd;
 		String viewPath;
 		if (result.isSuccess()) {

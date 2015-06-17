@@ -11,6 +11,8 @@ import com.braintreegateway.Transaction;
 import com.braintreegateway.TransactionRequest;
 import com.braintreegateway.TransactionSearchRequest;
 import com.bttraining.configuration.Configurator;
+import com.bttraining.dao.TransactionDao;
+import com.bttraining.dao.impl.TransactionDaoImpl;
 import com.bttraining.service.TransactionService;
 import com.bttraining.util.converter.TransactionConverter;
 import com.bttraining.web.dto.TransactionDTO;
@@ -18,6 +20,7 @@ import com.bttraining.web.dto.TransactionDTO;
 public class TransactionServiceImpl implements TransactionService {
 
 	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
+	private TransactionDao transactionDao = new TransactionDaoImpl();
 	private TransactionConverter transactionConverter = new TransactionConverter();
 
 	@Override
@@ -51,7 +54,7 @@ public class TransactionServiceImpl implements TransactionService {
 		Set<Transaction> result = new HashSet<Transaction>();
 		for (Transaction resourceTransaction : resourceTransactions) {
 			String transactionId = resourceTransaction.getId();
-			Transaction transaction = gateway.transaction().find(transactionId);
+			Transaction transaction = transactionDao.getTransactionById(transactionId);
 			result.add(transaction);
 		}
 		return result;

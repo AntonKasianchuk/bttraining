@@ -11,13 +11,6 @@ import com.bttraining.service.RegisterService;
 public class RegisterServiceImpl implements RegisterService {
 
 	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
-
-	@Override
-	public Result<Customer> getCustomerResultByCustomerRequest(
-			CustomerRequest customerRequest) {
-		Result<Customer> result = gateway.customer().create(customerRequest);
-		return result;
-	}
 	
 	private String getCustomerIdByResult(Result<Customer> result) {
 		String customerId = result.getTarget().getId();
