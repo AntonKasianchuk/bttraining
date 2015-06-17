@@ -6,6 +6,7 @@
 	media="screen" />
 <title>Customer transactions list</title>
 </head>
+<h2>Customer transactions list</h2>
 <body>
 		<table>
 			<tr>

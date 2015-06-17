@@ -4,9 +4,10 @@
 <head>
 <link rel="stylesheet" type="text/css" href="style/style.css"
 	media="screen" />
-<title>Customer list</title>
+<title>Customers list</title>
 </head>
 <body>
+<h2>Customers list</h2>
 	<form id="payment" method="post" action="/bttraining/existedCustomer">
 		<table>
 				<tr>

@@ -5,6 +5,7 @@
 <title>Edit customer</title>
 </head>
 <body>
+<h2>Edit customer</h2>
 <a href="index.html">Main page</a>
 <div style="color: blue;">${result}</div>
 	<form id="payment" method="post" action="/bttraining/editCustomer">

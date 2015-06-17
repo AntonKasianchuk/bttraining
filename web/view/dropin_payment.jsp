@@ -3,6 +3,7 @@
 	media="screen" />
 </head>
 <body>
+	<h2>Payment details</h2>
 	<form id="checkout" method="post" action="/bttraining/payment">
 		<div id="payment-form"></div>
 		Amount <input type="text" name="amount"> $

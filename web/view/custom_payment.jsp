@@ -4,7 +4,7 @@
 	media="screen" />
 </head>
 <body>
-	<h1>Braintree Payment Form</h1>
+	<h2>Payment details</h2>
 	<div>
 		<form action="/bttraining/payment" method="POST"
 			id="braintree-payment-form">
