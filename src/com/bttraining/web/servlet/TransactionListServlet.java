@@ -14,12 +14,13 @@ import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Transaction;
 import com.bttraining.service.PaymentService;
 import com.bttraining.service.impl.PaymentServiceImpl;
+import com.bttraining.web.dto.TransactionDTO;
 
 /**
  * Servlet implementation class TransactionList
  */
 @WebServlet("/transactionsList")
-public class TransactionList extends HttpServlet {
+public class TransactionListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PaymentService paymentService = new PaymentServiceImpl();
        
@@ -27,12 +28,12 @@ public class TransactionList extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String customerId = request.getParameter("customerId");
 
-		Set<Transaction> transactions = paymentService
-				.getTransactionsByCustomerId(customerId);
+		Set<TransactionDTO> transactionDTOs = paymentService
+				.getTransactionDTOsByCustomerId(customerId);
 		RequestDispatcher rd = request
 				.getRequestDispatcher("view/transaction_list.jsp");
 
-		request.setAttribute("transactions", transactions);
+		request.setAttribute("transactions", transactionDTOs);
 		// request.setAttribute("transactionStatus", transactionStatus);
 		rd.forward(request, response);
 	}

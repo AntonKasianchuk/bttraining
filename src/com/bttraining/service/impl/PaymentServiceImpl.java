@@ -12,10 +12,14 @@ import com.braintreegateway.TransactionRequest;
 import com.braintreegateway.TransactionSearchRequest;
 import com.bttraining.configuration.Configurator;
 import com.bttraining.service.PaymentService;
+import com.bttraining.util.converter.CustomerConverter;
+import com.bttraining.util.converter.TransactionConverter;
+import com.bttraining.web.dto.TransactionDTO;
 
 public class PaymentServiceImpl implements PaymentService {
 
 	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
+	private TransactionConverter transactionConverter = new TransactionConverter();
 
 	@Override
 	public Result<Transaction> doTransactionByMethodNonceAndAmount(
@@ -45,12 +49,24 @@ public class PaymentServiceImpl implements PaymentService {
 				.customerId().is(customerId);
 		ResourceCollection<Transaction> resourceTransactions = gateway.transaction()
 				.search(transactionSearchRequest);
-		Set<Transaction> transactions = new HashSet<Transaction>();
+		Set<Transaction> result = new HashSet<Transaction>();
 		for (Transaction resourceTransaction : resourceTransactions) {
 			String transactionId = resourceTransaction.getId();
 			Transaction transaction = gateway.transaction().find(transactionId);
-			transactions.add(transaction);
+			result.add(transaction);
 		}
-		return transactions;
+		return result;
 	}
+
+	@Override
+	public Set<TransactionDTO> getTransactionDTOsByCustomerId(String customerId) {
+		Set<Transaction> transactions = getTransactionsByCustomerId(customerId);
+		Set<TransactionDTO> result = new HashSet<TransactionDTO>();
+		for (Transaction transaction : transactions) {
+			TransactionDTO transactionDTO = transactionConverter.generateTransactionDTO(transaction);
+			result.add(transactionDTO);
+		}
+		return result;
+	}
+	
 }

@@ -5,6 +5,7 @@ import java.util.Set;
 import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Result;
 import com.braintreegateway.Transaction;
+import com.bttraining.web.dto.TransactionDTO;
 
 public interface PaymentService {
 
@@ -16,5 +17,8 @@ public interface PaymentService {
 	Result<Transaction> submitTransactionForSettlement(String transactionId);
 
 	Set<Transaction> getTransactionsByCustomerId(
+			String customerId);
+	
+	Set<TransactionDTO> getTransactionDTOsByCustomerId(
 			String customerId);
 }
