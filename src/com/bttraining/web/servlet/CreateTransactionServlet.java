@@ -9,11 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.braintreegateway.Customer;
-import com.braintreegateway.CustomerRequest;
-import com.braintreegateway.Result;
-import com.bttraining.web.dto.CustomerDTO;
-
 /**
  * Servlet implementation class CreateTransactionServlet
  */

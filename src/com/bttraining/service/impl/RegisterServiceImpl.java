@@ -3,7 +3,6 @@ package com.bttraining.service.impl;
 import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.ClientTokenRequest;
 import com.braintreegateway.Customer;
-import com.braintreegateway.CustomerRequest;
 import com.braintreegateway.Result;
 import com.bttraining.configuration.Configurator;
 import com.bttraining.service.RegisterService;

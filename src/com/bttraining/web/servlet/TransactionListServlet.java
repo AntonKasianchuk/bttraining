@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.braintreegateway.ResourceCollection;
-import com.braintreegateway.Transaction;
 import com.bttraining.service.TransactionService;
 import com.bttraining.service.impl.TransactionServiceImpl;
 import com.bttraining.web.dto.TransactionDTO;
