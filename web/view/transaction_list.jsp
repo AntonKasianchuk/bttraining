@@ -20,7 +20,8 @@
 			</tr>
 			<c:forEach items="${transactions}" var="transaction">
 				<tr>
-					<td>${transaction.id}</td>
+					<td><a
+						href="/bttraining/transactionDetails?transactionId=${transaction.id}">${transaction.id}</a></td>
 					<td>${transaction.date}</td>
 					<td>${transaction.type}</td>
 					<td>${transaction.status}</td>
