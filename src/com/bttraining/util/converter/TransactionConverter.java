@@ -9,8 +9,12 @@ public class TransactionConverter {
 		TransactionDTO transactionDTO = new TransactionDTO();
 		transactionDTO.setId(transaction.getId());
 		transactionDTO.setDate(transaction.getUpdatedAt().getTime());
+		String firstName = "";
+		if(transaction.getCustomer().getFirstName() != null) {
+			firstName = transaction.getCustomer().getFirstName();
+		}
 		transactionDTO.setCustomerName(transaction.getCustomer().getLastName()
-				+ " " + transaction.getCustomer().getFirstName());
+				+ " " + firstName);
 		transactionDTO.setType(transaction.getType().name());
 		transactionDTO.setStatus(transaction.getStatus().name());
 		transactionDTO.setAmount(transaction.getAmount().toEngineeringString());
