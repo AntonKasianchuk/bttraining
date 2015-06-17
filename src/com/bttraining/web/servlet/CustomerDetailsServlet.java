@@ -23,6 +23,7 @@ public class CustomerDetailsServlet extends HttpServlet {
 		CustomerDTO customerDTO = customerService.getCustomerDTOById(customerId);
 		RequestDispatcher rd = request.getRequestDispatcher("view/customer_edit.jsp");
 		request.setAttribute("customer", customerDTO);
+		request.setAttribute("customerId", customerId);
 		rd.forward(request, response);
 	}
 }

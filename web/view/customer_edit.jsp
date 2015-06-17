@@ -5,7 +5,10 @@
 <title>Edit customer</title>
 </head>
 <body>
-	<form id="payment" method="post" action="/bttraining/register">
+<a href="index.html">Main page</a>
+<div style="color: blue;">${result}</div>
+	<form id="payment" method="post" action="/bttraining/editCustomer">
+	<input type="hidden" name="customerId" value="${customerId}">
 		<table>
 			<tr>
 				<td>First name</td>
