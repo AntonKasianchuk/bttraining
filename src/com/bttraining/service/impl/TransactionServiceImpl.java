@@ -11,12 +11,11 @@ import com.braintreegateway.Transaction;
 import com.braintreegateway.TransactionRequest;
 import com.braintreegateway.TransactionSearchRequest;
 import com.bttraining.configuration.Configurator;
-import com.bttraining.service.PaymentService;
-import com.bttraining.util.converter.CustomerConverter;
+import com.bttraining.service.TransactionService;
 import com.bttraining.util.converter.TransactionConverter;
 import com.bttraining.web.dto.TransactionDTO;
 
-public class PaymentServiceImpl implements PaymentService {
+public class TransactionServiceImpl implements TransactionService {
 
 	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
 	private TransactionConverter transactionConverter = new TransactionConverter();

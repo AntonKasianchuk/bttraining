@@ -2,12 +2,11 @@ package com.bttraining.service;
 
 import java.util.Set;
 
-import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Result;
 import com.braintreegateway.Transaction;
 import com.bttraining.web.dto.TransactionDTO;
 
-public interface PaymentService {
+public interface TransactionService {
 
 	Result<Transaction> doTransactionByMethodNonceAndAmount(String methodNonce,
 			String amountString);

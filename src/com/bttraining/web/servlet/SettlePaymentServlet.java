@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.braintreegateway.Result;
 import com.braintreegateway.Transaction;
-import com.bttraining.service.PaymentService;
-import com.bttraining.service.impl.PaymentServiceImpl;
+import com.bttraining.service.TransactionService;
+import com.bttraining.service.impl.TransactionServiceImpl;
 
 @WebServlet("/settlePayment")
 public class SettlePaymentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private PaymentService paymentService = new PaymentServiceImpl();
+	private TransactionService paymentService = new TransactionServiceImpl();
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String transactionId = request.getParameter("transactionId");
