@@ -11,6 +11,7 @@ public class TransactionDTO {
 	private String customerName; 	
 	private String paymentInformation; 	
 	private String amount;
+	private Boolean isSettled;
 
 	public String getId() {
 		return id;
@@ -53,5 +54,11 @@ public class TransactionDTO {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public Boolean getIsSettled() {
+		return isSettled;
+	}
+	public void setIsSettled(Boolean isSettled) {
+		this.isSettled = isSettled;
 	}
 }

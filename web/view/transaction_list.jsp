@@ -17,18 +17,32 @@
 					<th>Customer</th>
 					<th>Payment Information</th>
 					<th>Amount</th>
+					<th>Action</th>
 			</tr>
 			<c:forEach items="${transactions}" var="transaction">
 				<tr>
-					<td><a
-						href="/bttraining/transactionDetails?transactionId=${transaction.id}">${transaction.id}</a></td>
+					<td>${transaction.id}</td>
 					<td>${transaction.date}</td>
 					<td>${transaction.type}</td>
 					<td>${transaction.status}</td>
 					<td>${transaction.customerName}</td>
 					<td>${transaction.paymentInformation}</td>
 					<td>${transaction.amount}</td>
-				</tr>
+					<td>
+						<c:choose>
+							<c:when test="${transaction.isSettled}">
+								<a
+									href="/bttraining/refundTransaction?transactionId=${transaction.id}">Refund
+									Payment</a>
+							</c:when>
+							<c:otherwise>
+								<a
+									href="/bttraining/cancelTransaction?transactionId=${transaction.id}">Cancel
+									Payment</a>
+							</c:otherwise>
+						</c:choose>
+					</td>
+			</tr>
 			</c:forEach>
 			<tr>
 				<td colspan="7"><a
