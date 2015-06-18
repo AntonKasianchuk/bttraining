@@ -39,7 +39,8 @@ public class RegisterServlet extends HttpServlet {
 		RequestDispatcher rd;
 		String viewPath;
 		if (result.isSuccess()) {
-			String clientToken = registerService.getClientTokenByResult(result);
+			Customer customer = result.getTarget();
+			String clientToken = registerService.getClientTokenByCustomer(customer);
 			request.setAttribute("token", clientToken);
 			viewPath = "view/choose_payment_form.jsp";
 		} else {

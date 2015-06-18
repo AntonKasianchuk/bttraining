@@ -4,5 +4,5 @@ import com.braintreegateway.Customer;
 import com.braintreegateway.Result;
 
 public interface RegisterService {
-	String getClientTokenByResult(Result<Customer> result);
+	String getClientTokenByCustomer(Customer result);
 }
