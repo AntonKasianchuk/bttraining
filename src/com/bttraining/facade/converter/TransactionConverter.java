@@ -1,4 +1,4 @@
-package com.bttraining.util.converter;
+package com.bttraining.facade.converter;
 
 import com.braintreegateway.Transaction;
 import com.braintreegateway.Transaction.Status;

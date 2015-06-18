@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bttraining.service.CustomerService;
-import com.bttraining.service.impl.CustomerServiceImp;
+import com.bttraining.facade.CustomerFacade;
+import com.bttraining.facade.impl.CustomerFacadeImpl;
 
 /**
  * Servlet implementation class CustomerListServlet
@@ -19,14 +19,13 @@ import com.bttraining.service.impl.CustomerServiceImp;
 @WebServlet("/customerList")
 public class CustomerListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private CustomerService customerService = new CustomerServiceImp();
+	private CustomerFacade customerFacade = new CustomerFacadeImpl();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Set<String> customerIds = customerService.getCustomerIds();
+		Set<String> customerIds = customerFacade.getCustomerIds();
  		RequestDispatcher rd = request.getRequestDispatcher("view/customer_list.jsp");
 		
 		request.setAttribute("customerIds", customerIds);
-		//request.setAttribute("transactionStatus", transactionStatus);
 		rd.forward(request, response);
 	}
 

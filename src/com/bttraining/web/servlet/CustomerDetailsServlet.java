@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bttraining.facade.CustomerFacade;
+import com.bttraining.facade.impl.CustomerFacadeImpl;
 import com.bttraining.service.CustomerService;
 import com.bttraining.service.impl.CustomerServiceImp;
 import com.bttraining.web.dto.CustomerDTO;
@@ -16,11 +18,11 @@ import com.bttraining.web.dto.CustomerDTO;
 @WebServlet("/customerDetails")
 public class CustomerDetailsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private CustomerService customerService = new CustomerServiceImp();
+	private CustomerFacade customerFacade = new CustomerFacadeImpl();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String customerId  = request.getParameter("customerId");
-		CustomerDTO customerDTO = customerService.getCustomerDTOById(customerId);
+		CustomerDTO customerDTO = customerFacade.getCustomerDTOById(customerId);
 		RequestDispatcher rd = request.getRequestDispatcher("view/customer_edit.jsp");
 		request.setAttribute("customer", customerDTO);
 		request.setAttribute("customerId", customerId);

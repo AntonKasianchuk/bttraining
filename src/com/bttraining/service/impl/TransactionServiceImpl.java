@@ -13,8 +13,8 @@ import com.braintreegateway.TransactionSearchRequest;
 import com.bttraining.configuration.Configurator;
 import com.bttraining.dao.TransactionDao;
 import com.bttraining.dao.impl.TransactionDaoImpl;
+import com.bttraining.facade.converter.TransactionConverter;
 import com.bttraining.service.TransactionService;
-import com.bttraining.util.converter.TransactionConverter;
 import com.bttraining.web.dto.TransactionDTO;
 
 public class TransactionServiceImpl implements TransactionService {

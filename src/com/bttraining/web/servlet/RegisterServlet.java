@@ -1,6 +1,7 @@
 package com.bttraining.web.servlet;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,37 +11,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.braintreegateway.Customer;
-import com.braintreegateway.CustomerRequest;
-import com.braintreegateway.Result;
-import com.bttraining.service.CustomerService;
-import com.bttraining.service.RegisterService;
-import com.bttraining.service.impl.CustomerServiceImp;
-import com.bttraining.service.impl.RegisterServiceImpl;
-import com.bttraining.util.converter.CustomerConverter;
-import com.bttraining.web.dto.CustomerDTO;
+import com.bttraining.facade.CustomerFacade;
+import com.bttraining.facade.impl.CustomerFacadeImpl;
+import com.bttraining.web.dto.CustomerRegisterDTO;
 
 @WebServlet(description = "Payment controller", urlPatterns = { "/register" })
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private RegisterService registerService = new RegisterServiceImpl();
-	private CustomerService customerService = new CustomerServiceImp();
-	private CustomerConverter customerConverter = new CustomerConverter();
+	private CustomerFacade customerFacade = new CustomerFacadeImpl();
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
-		CustomerDTO customerDTO = customerConverter
-				.generateCustomerDTO(request);
-		CustomerRequest customerRequest = customerConverter
-				.generateCustomerRequest(customerDTO);
-		Result<Customer> result = customerService
-				.createCustomer(customerRequest);
+		Map<String, String[]> customerParameterMap = request.getParameterMap();
+		CustomerRegisterDTO customerRegisterDTO = customerFacade
+				.createCustomer(customerParameterMap);
 
 		RequestDispatcher rd;
 		String viewPath;
-		if (result.isSuccess()) {
-			Customer customer = result.getTarget();
-			String clientToken = registerService.getClientTokenByCustomer(customer);
+		if (customerRegisterDTO.isRegistered()) {
+			String clientToken = customerRegisterDTO.getClientToken();
 			request.setAttribute("token", clientToken);
 			viewPath = "view/choose_payment_form.jsp";
 		} else {

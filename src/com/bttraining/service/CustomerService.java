@@ -20,5 +20,4 @@ public interface CustomerService {
 
 	Set<String> getCustomerIds();
 
-	CustomerDTO getCustomerDTOById(String cutomerId);
 }

@@ -1,6 +1,6 @@
-package com.bttraining.util.converter;
+package com.bttraining.facade.converter;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 import com.braintreegateway.Customer;
 import com.braintreegateway.CustomerRequest;
@@ -8,15 +8,15 @@ import com.bttraining.web.dto.CustomerDTO;
 
 public class CustomerConverter {
 
-	public CustomerDTO generateCustomerDTO(HttpServletRequest request) {
+	public CustomerDTO generateCustomerDTO(Map<String, String[]> customerParameterMap) {
 		CustomerDTO customerDTO = new CustomerDTO();
-		customerDTO.setFirstName(request.getParameter("first_name"));
-		customerDTO.setLastName(request.getParameter("last_name"));
-		customerDTO.setCompany(request.getParameter("company"));
-		customerDTO.setEmail(request.getParameter("email"));
-		customerDTO.setPhone(request.getParameter("phone"));
-		customerDTO.setFax(request.getParameter("fax"));
-		customerDTO.setWebsite(request.getParameter("website"));
+		customerDTO.setFirstName(customerParameterMap.get("first_name")[0]);
+		customerDTO.setLastName(customerParameterMap.get("last_name")[0]);
+		customerDTO.setCompany(customerParameterMap.get("company")[0]);
+		customerDTO.setEmail(customerParameterMap.get("email")[0]);
+		customerDTO.setPhone(customerParameterMap.get("phone")[0]);
+		customerDTO.setFax(customerParameterMap.get("fax")[0]);
+		customerDTO.setWebsite(customerParameterMap.get("website")[0]);
 		return customerDTO;
 	}
 	
