@@ -8,6 +8,9 @@
 </head>
 <h2>Customer transactions list</h2>
 <body>
+<form id="transactions" method="post" action="/bttraining/editCustomer">
+		<input type="hidden" id="transactionId" name="transactionId"
+			value="">
 		<table>
 			<tr>
 					<th>ID</th>
@@ -28,25 +31,22 @@
 					<td>${transaction.customerName}</td>
 					<td>${transaction.paymentInformation}</td>
 					<td>${transaction.amount}</td>
-					<td>
-						<c:choose>
+					<td><c:choose>
 							<c:when test="${transaction.isSettled}">
-								<a
-									href="/bttraining/refundTransaction?transactionId=${transaction.id}">Refund
-									Payment</a>
+								<a href="javascript:action('${transaction.id}', 'refundPayment')">Refund Payment</a>
 							</c:when>
 							<c:otherwise>
-								<a
-									href="/bttraining/cancelTransaction?transactionId=${transaction.id}">Cancel
+								<a href="javascript:action('${transaction.id}','cancelPayment')">Cancel
 									Payment</a>
 							</c:otherwise>
-						</c:choose>
-					</td>
-			</tr>
+						</c:choose></td>
+				</tr>
 			</c:forEach>
 			<tr>
 				<td colspan="7"><a
 						href="/bttraining/createTransaction?customerId=${customerId}">New transaction</a></td>
 			</tr>
 		</table>
+</form>
+<script src="js/transactionListAction.js"></script>
 </body>
