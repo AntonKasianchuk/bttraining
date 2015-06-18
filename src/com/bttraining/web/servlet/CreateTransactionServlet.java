@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.braintreegateway.Customer;
 import com.braintreegateway.ResourceCollection;
-import com.braintreegateway.Result;
 import com.bttraining.service.CustomerService;
 import com.bttraining.service.RegisterService;
 import com.bttraining.service.impl.CustomerServiceImp;
