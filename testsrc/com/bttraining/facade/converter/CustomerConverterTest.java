@@ -1,17 +1,16 @@
 package com.bttraining.facade.converter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import com.braintreegateway.Customer;
 import com.braintreegateway.CustomerRequest;
-import com.bttraining.web.dto.CustomerDTO;
 import com.bttraining.web.dto.CustomerInfoDTO;
 
 public class CustomerConverterTest {
@@ -27,11 +26,6 @@ public class CustomerConverterTest {
 	
 	private final CustomerConverter unit = new CustomerConverter();
 
-	@Before
-	public void setUp()
-	{
-	}
-	
 	@Test
 	public void shouldConvertCustomerToCustomerDTO() {
 		Customer customer = Mockito.mock(Customer.class);
