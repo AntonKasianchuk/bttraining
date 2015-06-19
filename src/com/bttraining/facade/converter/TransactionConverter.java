@@ -1,7 +1,6 @@
 package com.bttraining.facade.converter;
 
 import com.braintreegateway.Transaction;
-import com.braintreegateway.Transaction.Status;
 import com.bttraining.web.dto.TransactionInfoDTO;
 
 public class TransactionConverter {
@@ -20,11 +19,6 @@ public class TransactionConverter {
 		}
 		transactionDTO.setCustomerName(lastName + " " + firstName);
 		transactionDTO.setType(transaction.getType().name());
-		Boolean isSettled = Boolean.FALSE;
-		if (transaction.getStatus().ordinal() == Status.SETTLED.ordinal()) {
-			isSettled = Boolean.TRUE;
-		}
-		transactionDTO.setIsSettled(isSettled);
 		transactionDTO.setStatus(transaction.getStatus().name());
 		transactionDTO.setAmount(transaction.getAmount().toEngineeringString());
 		transactionDTO.setPaymentInformation(transaction

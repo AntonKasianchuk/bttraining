@@ -32,18 +32,20 @@
 					<td>${transaction.paymentInformation}</td>
 					<td>${transaction.amount}</td>
 					<td><c:choose>
-							<c:when test="${transaction.isSettled}">
+							<c:when test="${transaction.status eq 'SUBMITTED_FOR_SETTLEMENT' or transaction.status == 'AUTHORIZED'}">
+								<a href="javascript:action('${transaction.id}', 'cancelPayment')">Cancel Payment</a>
+							</c:when>
+							<c:when test="${transaction.status eq 'SETTLED'}">
 								<a href="javascript:action('${transaction.id}', 'refundPayment')">Refund Payment</a>
 							</c:when>
 							<c:otherwise>
-								<a href="javascript:action('${transaction.id}','cancelPayment')">Cancel
-									Payment</a>
+
 							</c:otherwise>
 						</c:choose></td>
 				</tr>
 			</c:forEach>
 			<tr>
-				<td colspan="7"><a
+				<td colspan="8"><a
 						href="/bttraining/createTransaction?customerId=${customerId}">New transaction</a></td>
 			</tr>
 		</table>
