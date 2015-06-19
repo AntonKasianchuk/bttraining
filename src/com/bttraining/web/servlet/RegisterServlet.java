@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.braintreegateway.Customer;
 import com.bttraining.facade.CustomerFacade;
 import com.bttraining.facade.impl.CustomerFacadeImpl;
 import com.bttraining.web.dto.CustomerRegisterDTO;
@@ -28,7 +27,7 @@ public class RegisterServlet extends HttpServlet {
 
 		RequestDispatcher rd;
 		String viewPath;
-		if (customerRegisterDTO.isRegistered()) {
+		if (customerRegisterDTO.isSuccess()) {
 			String clientToken = customerRegisterDTO.getClientToken();
 			request.setAttribute("token", clientToken);
 			viewPath = "view/choose_payment_form.jsp";

@@ -12,8 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(description = "Choose form controller", urlPatterns = { "/paymentForm" })
 public class PaymentDispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd;
 		String viewPath;
 		String paymentForm = request.getParameter("payment_form");
@@ -26,5 +27,4 @@ public class PaymentDispatcherServlet extends HttpServlet {
 		rd = request.getRequestDispatcher(viewPath);
 		rd.forward(request, response);
 	}
-
 }

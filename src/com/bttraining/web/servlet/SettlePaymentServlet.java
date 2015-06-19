@@ -9,31 +9,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.braintreegateway.Result;
-import com.braintreegateway.Transaction;
-import com.bttraining.service.TransactionService;
-import com.bttraining.service.impl.TransactionServiceImpl;
+import com.bttraining.facade.TransactionFacade;
+import com.bttraining.facade.impl.TransactionFacadeImpl;
+import com.bttraining.web.dto.TransactionDTO;
 
 @WebServlet("/settlePayment")
 public class SettlePaymentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private TransactionService paymentService = new TransactionServiceImpl();
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private TransactionFacade transactionFacade = new TransactionFacadeImpl();
+
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		String transactionId = request.getParameter("transactionId");
-		Result<Transaction> result = paymentService.submitTransactionForSettlement(transactionId);
-		String transactionStatus = result.getTarget().getStatus().toString();
+		TransactionDTO transactionDTO = transactionFacade
+				.submitTransactionForSettlement(transactionId);
 		String viewPath;
-		if (result.isSuccess()) {
+		if (transactionDTO.isSuccess()) {
 			request.setAttribute("transactionId", transactionId);
 			viewPath = "view/cancel_payment.jsp";
 		} else {
 			request.setAttribute("result", "error");
 			viewPath = "view/results.jsp";
 		}
-		request.setAttribute("transactionStatus", transactionStatus);
+		request.setAttribute("transactionStatus",
+				transactionDTO.getTransactionStatus());
 		RequestDispatcher rd = request.getRequestDispatcher(viewPath);
 		rd.forward(request, response);
 	}
-
 }

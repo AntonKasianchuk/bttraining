@@ -9,12 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.braintreegateway.Customer;
-import com.braintreegateway.ResourceCollection;
-import com.bttraining.service.CustomerService;
-import com.bttraining.service.RegisterService;
-import com.bttraining.service.impl.CustomerServiceImp;
-import com.bttraining.service.impl.RegisterServiceImpl;
+import com.bttraining.facade.CustomerFacade;
+import com.bttraining.facade.impl.CustomerFacadeImpl;
 
 /**
  * Servlet implementation class CreateTransactionServlet
@@ -22,17 +18,16 @@ import com.bttraining.service.impl.RegisterServiceImpl;
 @WebServlet("/createTransaction")
 public class CreateTransactionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private RegisterService registerService = new RegisterServiceImpl();
-	private CustomerService customerService = new CustomerServiceImp();
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String customerId  = request.getParameter("customerId");
-		ResourceCollection<Customer> customerCollection = customerService.getCustomerById(customerId);
-		Customer customer = customerCollection.getFirst();
-		String clientToken = registerService.getClientTokenByCustomer(customer);
+	private CustomerFacade customerFacade = new CustomerFacadeImpl();
+
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String customerId = request.getParameter("customerId");
+		String clientToken = customerFacade
+				.getClientTokenByCustomerId(customerId);
 		request.setAttribute("token", clientToken);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("view/choose_payment_form.jsp");
+		RequestDispatcher rd = request
+				.getRequestDispatcher("view/choose_payment_form.jsp");
 		rd.forward(request, response);
 	}
 

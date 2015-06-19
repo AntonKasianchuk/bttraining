@@ -2,12 +2,12 @@ package com.bttraining.facade.converter;
 
 import com.braintreegateway.Transaction;
 import com.braintreegateway.Transaction.Status;
-import com.bttraining.web.dto.TransactionDTO;
+import com.bttraining.web.dto.TransactionInfoDTO;
 
 public class TransactionConverter {
 
-	public TransactionDTO generateTransactionDTO(Transaction transaction) {
-		TransactionDTO transactionDTO = new TransactionDTO();
+	public TransactionInfoDTO generateTransactionDTO(Transaction transaction) {
+		TransactionInfoDTO transactionDTO = new TransactionInfoDTO();
 		transactionDTO.setId(transaction.getId());
 		transactionDTO.setDate(transaction.getUpdatedAt().getTime());
 		String lastName = "";
@@ -29,7 +29,7 @@ public class TransactionConverter {
 		transactionDTO.setAmount(transaction.getAmount().toEngineeringString());
 		transactionDTO.setPaymentInformation(transaction
 				.getPaymentInstrumentType());
-		
+
 		return transactionDTO;
 	}
 }

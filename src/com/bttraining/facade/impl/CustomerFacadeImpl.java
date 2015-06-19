@@ -13,67 +13,84 @@ import com.bttraining.service.CustomerService;
 import com.bttraining.service.RegisterService;
 import com.bttraining.service.impl.CustomerServiceImp;
 import com.bttraining.service.impl.RegisterServiceImpl;
+import com.bttraining.web.dto.CustomerInfoDTO;
 import com.bttraining.web.dto.CustomerDTO;
-import com.bttraining.web.dto.CustomerEditDTO;
 import com.bttraining.web.dto.CustomerRegisterDTO;
 
 public class CustomerFacadeImpl implements CustomerFacade {
 	private CustomerService customerService = new CustomerServiceImp();
 	private RegisterService registerService = new RegisterServiceImpl();
- 	private CustomerConverter customerConverter = new CustomerConverter();
-	
+	private CustomerConverter customerConverter = new CustomerConverter();
+
 	@Override
 	public Set<String> getCustomerIds() {
 		Set<String> customerIdSet = customerService.getCustomerIds();
 		return customerIdSet;
 	}
-	
+
 	@Override
-	public CustomerDTO getCustomerDTOById(String customerId) {
-		ResourceCollection<Customer> customerCollection = customerService.getCustomerById(customerId);
+	public CustomerInfoDTO getCustomerDTOById(String customerId) {
+		ResourceCollection<Customer> customerCollection = customerService
+				.getCustomerById(customerId);
 		Customer customer = customerCollection.getFirst();
-		CustomerDTO customerDTO = customerConverter.generateCustomerDTO(customer);
+		CustomerInfoDTO customerDTO = customerConverter
+				.generateCustomerDTO(customer);
 		return customerDTO;
 	}
 
 	@Override
-	public CustomerEditDTO updateCustomer(String customerId, Map<String, String[]> customerParameterMap) {
-		CustomerEditDTO customerEditDTO = new CustomerEditDTO();
-		
-		CustomerDTO customerDTO = generateCustomerDTO(customerParameterMap);
+	public CustomerDTO updateCustomer(String customerId,
+			Map<String, String[]> customerParameterMap) {
+		CustomerDTO customerEditDTO = new CustomerDTO();
+
+		CustomerInfoDTO customerDTO = generateCustomerDTO(customerParameterMap);
 		CustomerRequest customerRequest = generateCustomerRequest(customerDTO);
-		
-		Result<Customer> customerResult =  customerService.updateCustomer(customerId, customerRequest);
-		customerEditDTO.setCustomerDTO(customerDTO);
-		customerEditDTO.setEdited(customerResult.isSuccess());
+
+		Result<Customer> customerResult = customerService.updateCustomer(
+				customerId, customerRequest);
+		customerEditDTO.setCustomerInfoDTO(customerDTO);
+		customerEditDTO.setSuccess(customerResult.isSuccess());
 		return customerEditDTO;
 	}
 
 	@Override
-	public CustomerRegisterDTO createCustomer(Map<String, String[]> customerParameterMap) {
+	public CustomerRegisterDTO createCustomer(
+			Map<String, String[]> customerParameterMap) {
 		CustomerRegisterDTO customerRegisterDTO = new CustomerRegisterDTO();
-		CustomerDTO customerDTO = generateCustomerDTO(customerParameterMap);
+		CustomerInfoDTO customerDTO = generateCustomerDTO(customerParameterMap);
 		CustomerRequest customerRequest = generateCustomerRequest(customerDTO);
-		Result<Customer> customerResult = customerService.createCustomer(customerRequest);
+		Result<Customer> customerResult = customerService
+				.createCustomer(customerRequest);
 		boolean isSuccess = customerResult.isSuccess();
 		if (isSuccess) {
 			Customer customer = customerResult.getTarget();
-			String clientToken = registerService.getClientTokenByCustomer(customer);
+			String clientToken = registerService
+					.getClientTokenByCustomer(customer);
 			customerRegisterDTO.setClientToken(clientToken);
 		}
-		customerRegisterDTO.setRegistered(isSuccess);
+		customerRegisterDTO.setSuccess(isSuccess);
 		return customerRegisterDTO;
 	}
-	
-	private CustomerDTO generateCustomerDTO(Map<String, String[]> customerParameterMap) {
-		CustomerDTO customerDTO = customerConverter
+
+	private CustomerInfoDTO generateCustomerDTO(
+			Map<String, String[]> customerParameterMap) {
+		CustomerInfoDTO customerDTO = customerConverter
 				.generateCustomerDTO(customerParameterMap);
 		return customerDTO;
 	}
-	
-	private CustomerRequest generateCustomerRequest(CustomerDTO customerDTO) {
+
+	private CustomerRequest generateCustomerRequest(CustomerInfoDTO customerDTO) {
 		CustomerRequest customerRequest = customerConverter
 				.generateCustomerRequest(customerDTO);
 		return customerRequest;
+	}
+
+	@Override
+	public String getClientTokenByCustomerId(String customerId) {
+		ResourceCollection<Customer> customerCollection = customerService
+				.getCustomerById(customerId);
+		Customer customer = customerCollection.getFirst();
+		String clientToken = registerService.getClientTokenByCustomer(customer);
+		return clientToken;
 	}
 }

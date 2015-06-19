@@ -11,35 +11,35 @@ import com.bttraining.dao.CustomerDao;
 
 public class CustomerDaoImpl implements CustomerDao {
 	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
-	
+
 	@Override
-	public Result<Customer> createCustomer (
-			CustomerRequest customerRequest) {
+	public Result<Customer> createCustomer(CustomerRequest customerRequest) {
 		Result<Customer> result = gateway.customer().create(customerRequest);
 		return result;
 	}
-	
+
 	@Override
-	public Result<Customer> updateCustomer(String customerId, CustomerRequest customerRequest) {
-		Result<Customer> result = gateway.customer().update(customerId, customerRequest);
+	public Result<Customer> updateCustomer(String customerId,
+			CustomerRequest customerRequest) {
+		Result<Customer> result = gateway.customer().update(customerId,
+				customerRequest);
 		return result;
 	}
 
 	@Override
 	public ResourceCollection<Customer> getAllCustomers() {
-		CustomerSearchRequest request = new CustomerSearchRequest().id().is(
-				"");
+		CustomerSearchRequest request = new CustomerSearchRequest().id().is("");
 		ResourceCollection<Customer> customers = gateway.customer().search(
 				request);
 		return customers;
 	}
-	
+
 	@Override
 	public ResourceCollection<Customer> getCustomerById(String customerId) {
-		CustomerSearchRequest request = new CustomerSearchRequest().id().is(customerId);
+		CustomerSearchRequest request = new CustomerSearchRequest().id().is(
+				customerId);
 		ResourceCollection<Customer> collection = gateway.customer().search(
 				request);
 		return collection;
 	}
-
 }

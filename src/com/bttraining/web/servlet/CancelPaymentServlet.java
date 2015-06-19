@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.braintreegateway.Result;
-import com.braintreegateway.Transaction;
-import com.bttraining.service.TransactionService;
-import com.bttraining.service.impl.TransactionServiceImpl;
+import com.bttraining.facade.TransactionFacade;
+import com.bttraining.facade.impl.TransactionFacadeImpl;
+import com.bttraining.web.dto.TransactionDTO;
 
 @WebServlet("/cancelPayment")
 public class CancelPaymentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private TransactionService paymentService = new TransactionServiceImpl();
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private TransactionFacade transactionFacade = new TransactionFacadeImpl();
+
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		String transactionId = request.getParameter("transactionId");
-		Result<Transaction> result = paymentService.voidTransaction(transactionId);
-		String transactionStatus = result.getTarget().getStatus().toString();
+		TransactionDTO result = transactionFacade
+				.voidTransaction(transactionId);
 		String resultValue;
 		if (result.isSuccess()) {
 			resultValue = "Canceled.";
@@ -30,7 +30,7 @@ public class CancelPaymentServlet extends HttpServlet {
 			resultValue = "Cannot be canceled. Error.";
 		}
 		request.setAttribute("result", resultValue);
-		request.setAttribute("transactionStatus", transactionStatus);
+		request.setAttribute("transactionStatus", result.getTransactionStatus());
 		RequestDispatcher rd = request.getRequestDispatcher("view/result.jsp");
 		rd.forward(request, response);
 	}

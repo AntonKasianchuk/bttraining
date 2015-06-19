@@ -11,26 +11,26 @@ import com.braintreegateway.Result;
 import com.bttraining.configuration.Configurator;
 import com.bttraining.dao.CustomerDao;
 import com.bttraining.dao.impl.CustomerDaoImpl;
-import com.bttraining.facade.converter.CustomerConverter;
 import com.bttraining.service.CustomerService;
-import com.bttraining.web.dto.CustomerDTO;
 
 public class CustomerServiceImp implements CustomerService {
 	private CustomerDao customerDao = new CustomerDaoImpl();
 	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
-	
+
 	@Override
 	public Result<Customer> createCustomer(CustomerRequest customerRequest) {
 		Result<Customer> result = customerDao.createCustomer(customerRequest);
 		return result;
 	}
-	
+
 	@Override
-	public Result<Customer> updateCustomer(String customerId, CustomerRequest customerRequest) {
-		Result<Customer> result = gateway.customer().update(customerId, customerRequest);
+	public Result<Customer> updateCustomer(String customerId,
+			CustomerRequest customerRequest) {
+		Result<Customer> result = gateway.customer().update(customerId,
+				customerRequest);
 		return result;
 	}
-	
+
 	@Override
 	public ResourceCollection<Customer> getAllCustomers() {
 		ResourceCollection<Customer> customers = customerDao.getAllCustomers();
@@ -49,7 +49,8 @@ public class CustomerServiceImp implements CustomerService {
 
 	@Override
 	public ResourceCollection<Customer> getCustomerById(String customerId) {
-		ResourceCollection<Customer> customers = customerDao.getCustomerById(customerId);
+		ResourceCollection<Customer> customers = customerDao
+				.getCustomerById(customerId);
 		return customers;
 	}
 }

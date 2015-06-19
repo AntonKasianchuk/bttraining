@@ -21,12 +21,12 @@ public class CustomerListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CustomerFacade customerFacade = new CustomerFacadeImpl();
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		Set<String> customerIds = customerFacade.getCustomerIds();
- 		RequestDispatcher rd = request.getRequestDispatcher("view/customer_list.jsp");
-		
+		RequestDispatcher rd = request
+				.getRequestDispatcher("view/customer_list.jsp");
 		request.setAttribute("customerIds", customerIds);
 		rd.forward(request, response);
 	}
-
 }

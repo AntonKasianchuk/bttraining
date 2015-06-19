@@ -4,12 +4,13 @@ import java.util.Map;
 
 import com.braintreegateway.Customer;
 import com.braintreegateway.CustomerRequest;
-import com.bttraining.web.dto.CustomerDTO;
+import com.bttraining.web.dto.CustomerInfoDTO;
 
 public class CustomerConverter {
 
-	public CustomerDTO generateCustomerDTO(Map<String, String[]> customerParameterMap) {
-		CustomerDTO customerDTO = new CustomerDTO();
+	public CustomerInfoDTO generateCustomerDTO(
+			Map<String, String[]> customerParameterMap) {
+		CustomerInfoDTO customerDTO = new CustomerInfoDTO();
 		customerDTO.setFirstName(customerParameterMap.get("first_name")[0]);
 		customerDTO.setLastName(customerParameterMap.get("last_name")[0]);
 		customerDTO.setCompany(customerParameterMap.get("company")[0]);
@@ -19,9 +20,9 @@ public class CustomerConverter {
 		customerDTO.setWebsite(customerParameterMap.get("website")[0]);
 		return customerDTO;
 	}
-	
-	public CustomerDTO generateCustomerDTO(Customer customer) {
-		CustomerDTO customerDTO = new CustomerDTO();
+
+	public CustomerInfoDTO generateCustomerDTO(Customer customer) {
+		CustomerInfoDTO customerDTO = new CustomerInfoDTO();
 		customerDTO.setFirstName(customer.getFirstName());
 		customerDTO.setLastName(customer.getLastName());
 		customerDTO.setCompany(customer.getCompany());
@@ -31,8 +32,8 @@ public class CustomerConverter {
 		customerDTO.setWebsite(customer.getWebsite());
 		return customerDTO;
 	}
-	
-	public CustomerRequest generateCustomerRequest(CustomerDTO customerDTO) {
+
+	public CustomerRequest generateCustomerRequest(CustomerInfoDTO customerDTO) {
 		CustomerRequest customerRequest = new CustomerRequest();
 		customerRequest.firstName(customerDTO.getFirstName());
 		customerRequest.lastName(customerDTO.getLastName());

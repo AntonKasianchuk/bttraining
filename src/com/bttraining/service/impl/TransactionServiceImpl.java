@@ -13,15 +13,12 @@ import com.braintreegateway.TransactionSearchRequest;
 import com.bttraining.configuration.Configurator;
 import com.bttraining.dao.TransactionDao;
 import com.bttraining.dao.impl.TransactionDaoImpl;
-import com.bttraining.facade.converter.TransactionConverter;
 import com.bttraining.service.TransactionService;
-import com.bttraining.web.dto.TransactionDTO;
 
 public class TransactionServiceImpl implements TransactionService {
 
 	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
 	private TransactionDao transactionDao = new TransactionDaoImpl();
-	private TransactionConverter transactionConverter = new TransactionConverter();
 
 	@Override
 	public Result<Transaction> doTransactionByMethodNonceAndAmount(
@@ -33,42 +30,33 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public Result<Transaction> submitTransactionForSettlement(String transactionId) {
-		Result<Transaction> result = gateway.transaction().submitForSettlement(transactionId);
+	public Result<Transaction> submitTransactionForSettlement(
+			String transactionId) {
+		Result<Transaction> result = gateway.transaction().submitForSettlement(
+				transactionId);
 		return result;
 	}
 
 	@Override
 	public Result<Transaction> voidTransaction(String transactionId) {
-		Result<Transaction> result = gateway.transaction().voidTransaction(transactionId);
+		Result<Transaction> result = gateway.transaction().voidTransaction(
+				transactionId);
 		return result;
 	}
 
 	@Override
-	public Set<Transaction> getTransactionsByCustomerId(
-			String customerId) {
+	public Set<Transaction> getTransactionsByCustomerId(String customerId) {
 		TransactionSearchRequest transactionSearchRequest = new TransactionSearchRequest()
 				.customerId().is(customerId);
-		ResourceCollection<Transaction> resourceTransactions = gateway.transaction()
-				.search(transactionSearchRequest);
+		ResourceCollection<Transaction> resourceTransactions = gateway
+				.transaction().search(transactionSearchRequest);
 		Set<Transaction> result = new HashSet<Transaction>();
 		for (Transaction resourceTransaction : resourceTransactions) {
 			String transactionId = resourceTransaction.getId();
-			Transaction transaction = transactionDao.getTransactionById(transactionId);
+			Transaction transaction = transactionDao
+					.getTransactionById(transactionId);
 			result.add(transaction);
 		}
 		return result;
 	}
-
-	@Override
-	public Set<TransactionDTO> getTransactionDTOsByCustomerId(String customerId) {
-		Set<Transaction> transactions = getTransactionsByCustomerId(customerId);
-		Set<TransactionDTO> result = new HashSet<TransactionDTO>();
-		for (Transaction transaction : transactions) {
-			TransactionDTO transactionDTO = transactionConverter.generateTransactionDTO(transaction);
-			result.add(transactionDTO);
-		}
-		return result;
-	}
-	
 }

@@ -9,7 +9,7 @@ import com.bttraining.service.RegisterService;
 public class RegisterServiceImpl implements RegisterService {
 
 	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
-	
+
 	@Override
 	public String getClientTokenByCustomer(Customer customer) {
 		String customerId = customer.getId();
