@@ -14,4 +14,6 @@ public interface TransactionFacade {
 	TransactionDTO voidTransaction(String transactionId);
 
 	Set<TransactionInfoDTO> getTransactionInfoDTOsByCustomerId(String customerId);
+
+	TransactionDTO refundTransaction(String transactionId);
 }

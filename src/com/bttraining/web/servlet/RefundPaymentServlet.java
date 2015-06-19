@@ -9,25 +9,30 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bttraining.facade.TransactionFacade;
+import com.bttraining.facade.impl.TransactionFacadeImpl;
+import com.bttraining.web.dto.TransactionDTO;
+
 /**
  * Servlet implementation class EditTransactionServlet
  */
 @WebServlet("/refundPayment")
 public class RefundPaymentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private TransactionFacade transactionFacade = new TransactionFacadeImpl();
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String transactionId = request.getParameter("transactionId");
-//		Result<Transaction> result = paymentService.voidTransaction(transactionId);
-//		String transactionStatus = result.getTarget().getStatus().toString();
-//		String resultValue;
-//		if (result.isSuccess()) {
-//			resultValue = "Canceled.";
-//		} else {
-//			resultValue = "Cannot be canceled. Error.";
-//		}
-//		request.setAttribute("result", resultValue);
-//		request.setAttribute("transactionStatus", transactionStatus);
+		TransactionDTO result = transactionFacade
+				.refundTransaction(transactionId);
+		String resultValue;
+		if (result.isSuccess()) {
+			resultValue = "Refunded.";
+		} else {
+			resultValue = "Cannot be refunded. Error.";
+		}
+		request.setAttribute("result", resultValue);
+		request.setAttribute("transactionStatus", result.getTransactionStatus());
 		RequestDispatcher rd = request.getRequestDispatcher("view/result.jsp");
 		rd.forward(request, response);
 	}

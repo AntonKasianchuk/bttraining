@@ -59,4 +59,12 @@ public class TransactionServiceImpl implements TransactionService {
 		}
 		return result;
 	}
+
+	@Override
+	public Result<Transaction> refundTransaction(String transactionId) {
+		Result<Transaction> result = gateway.transaction().refund(
+				transactionId);
+		return result;
+	}
+
 }

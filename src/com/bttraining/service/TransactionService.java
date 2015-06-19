@@ -16,4 +16,5 @@ public interface TransactionService {
 
 	Set<Transaction> getTransactionsByCustomerId(String customerId);
 
+	Result<Transaction> refundTransaction(String transactionId);
 }

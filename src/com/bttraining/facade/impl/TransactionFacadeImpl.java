@@ -68,4 +68,16 @@ public class TransactionFacadeImpl implements TransactionFacade {
 		}
 		return result;
 	}
+
+	@Override
+	public TransactionDTO refundTransaction(String transactionId) {
+		TransactionDTO transactionDTO = new TransactionDTO();
+		Result<Transaction> result = transactionService
+				.refundTransaction(transactionId);
+		String transactionStatus = result.getTarget().getStatus().toString();
+		boolean success = result.isSuccess();
+		transactionDTO.setSuccess(success);
+		transactionDTO.setTransactionStatus(transactionStatus);
+		return transactionDTO;
+	}
 }
