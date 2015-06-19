@@ -1,4 +1,4 @@
-package bttraining.service;
+package com.bttraining.service;
 
 public class CustomerServiceTest {
 

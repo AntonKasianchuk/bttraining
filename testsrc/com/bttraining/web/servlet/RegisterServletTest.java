@@ -1,4 +1,4 @@
-package bttraining.web.servlet;
+package com.bttraining.web.servlet;
 
 
 public class RegisterServletTest {

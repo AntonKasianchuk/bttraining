@@ -1,4 +1,4 @@
-package bttraining.facade;
+package com.bttraining.facade;
 
 public class CustomerFacadeTest {
 
