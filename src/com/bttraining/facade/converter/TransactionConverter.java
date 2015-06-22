@@ -10,7 +10,7 @@ public class TransactionConverter {
 		transactionDTO.setId(transaction.getId());
 		transactionDTO.setDate(transaction.getUpdatedAt().getTime());
 		String lastName = "";
-		if (transaction.getCustomer().getFirstName() != null) {
+		if (transaction.getCustomer().getLastName() != null) {
 			lastName = transaction.getCustomer().getLastName();
 		}
 		String firstName = "";
