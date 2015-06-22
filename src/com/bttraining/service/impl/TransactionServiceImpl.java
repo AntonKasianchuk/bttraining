@@ -45,26 +45,38 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public Set<Transaction> getTransactionsByCustomerId(String customerId) {
-		TransactionSearchRequest transactionSearchRequest = new TransactionSearchRequest()
-				.customerId().is(customerId);
-		ResourceCollection<Transaction> resourceTransactions = gateway
-				.transaction().search(transactionSearchRequest);
-		Set<Transaction> result = new HashSet<Transaction>();
-		for (Transaction resourceTransaction : resourceTransactions) {
-			String transactionId = resourceTransaction.getId();
-			Transaction transaction = transactionDao
-					.getTransactionById(transactionId);
-			result.add(transaction);
-		}
-		return result;
-	}
-
-	@Override
 	public Result<Transaction> refundTransaction(String transactionId) {
 		Result<Transaction> result = gateway.transaction().refund(
 				transactionId);
 		return result;
 	}
+	
+	@Override
+	public Set<Transaction> getTransactionsByCustomerId(String customerId) {
+		ResourceCollection<Transaction> resourceTransactions = getResourceTransactionsByCustomerId(customerId);
+		Set<Transaction> transactionSet = new HashSet<Transaction>();
+		for (Transaction resourceTransaction : resourceTransactions) {
+			String transactionId = resourceTransaction.getId();
+			Transaction transaction = transactionDao
+					.getTransactionById(transactionId);
+			transactionSet.add(transaction);
+		}
+		return transactionSet;
+	}
+	
+	private ResourceCollection<Transaction> getResourceTransactionsByCustomerId(String customerId) {
+		TransactionSearchRequest transactionSearchRequest = new TransactionSearchRequest()
+		.customerId().is(customerId);
+		ResourceCollection<Transaction> resourceTransactions = gateway
+				.transaction().search(transactionSearchRequest);
+		return resourceTransactions;
+	}
 
+	public void setDao(TransactionDao transactionDao) {
+		this.transactionDao = transactionDao;
+	}
+	
+	public void setGateway(BraintreeGateway gateway ) {
+		this.gateway = gateway;
+	}
 }

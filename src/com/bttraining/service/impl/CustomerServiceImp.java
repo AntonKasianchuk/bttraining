@@ -49,8 +49,7 @@ public class CustomerServiceImp implements CustomerService {
 		return customers;
 	}
 
-	@Override
-	public void setDao(CustomerDao customerDao) {
+	public void setCustomerDao(CustomerDao customerDao) {
 		this.customerDao = customerDao;
 	}
 }

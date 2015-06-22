@@ -17,6 +17,4 @@ public interface CustomerService {
 	ResourceCollection<Customer> getCustomerById(String customerId);
 
 	Set<String> getCustomerIds();
-	
-	void setDao(CustomerDao customerDao);
 }
