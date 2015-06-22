@@ -1,12 +1,13 @@
 package com.bttraining.facade.converter;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import com.braintreegateway.Customer;
 import com.braintreegateway.Transaction;
@@ -29,21 +30,21 @@ public class TransactionConverterTest {
 	@Test
 	public void shouldConvertCustomerToCustomerDTO() {
 		// given
-		final Transaction transaction = Mockito.mock(Transaction.class);
-		Mockito.when(transaction.getId()).thenReturn(ID);
-		Mockito.when(transaction.getUpdatedAt()).thenReturn(DATE);
-		Customer customer = Mockito.mock(Customer.class);
-		Mockito.when(customer.getFirstName()).thenReturn("first");
-		Mockito.when(customer.getLastName()).thenReturn("last");
-		Mockito.when(transaction.getCustomer()).thenReturn(customer);
+		final Transaction transaction = mock(Transaction.class);
+		when(transaction.getId()).thenReturn(ID);
+		when(transaction.getUpdatedAt()).thenReturn(DATE);
+		Customer customer = mock(Customer.class);
+		when(customer.getFirstName()).thenReturn("first");
+		when(customer.getLastName()).thenReturn("last");
+		when(transaction.getCustomer()).thenReturn(customer);
 		Type type = Transaction.Type.CREDIT;
-		Mockito.when(transaction.getType()).thenReturn(type);
+		when(transaction.getType()).thenReturn(type);
 		Status status = Transaction.Status.SETTLED;
-		Mockito.when(transaction.getStatus()).thenReturn(status);
-		BigDecimal amount = Mockito.mock(BigDecimal.class);
-		Mockito.when(transaction.getAmount()).thenReturn(amount);
-		Mockito.when(amount.toEngineeringString()).thenReturn(AMOUNT);
-		Mockito.when(transaction.getPaymentInstrumentType()).thenReturn(
+		when(transaction.getStatus()).thenReturn(status);
+		BigDecimal amount = mock(BigDecimal.class);
+		when(transaction.getAmount()).thenReturn(amount);
+		when(amount.toEngineeringString()).thenReturn(AMOUNT);
+		when(transaction.getPaymentInstrumentType()).thenReturn(
 				PAYMENT_INFORMATION);
 
 		// when
