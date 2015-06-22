@@ -72,7 +72,7 @@ public class TransactionServiceImpl implements TransactionService {
 		return resourceTransactions;
 	}
 
-	public void setDao(TransactionDao transactionDao) {
+	public void setTransactionDao(TransactionDao transactionDao) {
 		this.transactionDao = transactionDao;
 	}
 	
