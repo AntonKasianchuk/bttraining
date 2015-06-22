@@ -1,5 +1,6 @@
 package com.bttraining.service;
 
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -15,7 +16,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.braintreegateway.Customer;
@@ -37,14 +37,14 @@ public class CustomerServiceTest {
 
 	@Before
 	public void setUp() {
-		// MockitoAnnotations.initMocks(this); // if the test case cannot be run with Mockito JUnitRunner
+		// MockitoAnnotations.initMocks(this); // if the test case cannot be run
+		// with Mockito JUnitRunner
 	}
 
 	@Test
 	public void shouldCreateCustomer() {
 		// given
-		Result<Customer> expectedResult = (Result<Customer>) Mockito
-				.mock(Result.class);
+		Result<Customer> expectedResult = (Result<Customer>) mock(Result.class);
 		CustomerRequest customerRequest = mock(CustomerRequest.class);
 		when(customerDao.createCustomer(customerRequest)).thenReturn(
 				expectedResult);
@@ -53,7 +53,7 @@ public class CustomerServiceTest {
 		Result<Customer> actualResult = customerService
 				.createCustomer(customerRequest);
 
-		// when
+		// then
 		Assert.assertEquals(expectedResult, actualResult);
 	}
 
@@ -61,8 +61,7 @@ public class CustomerServiceTest {
 	public void shouldUpdateCustomer() {
 		// given
 		String customerId = "id";
-		Result<Customer> expectedResult = (Result<Customer>) Mockito
-				.mock(Result.class);
+		Result<Customer> expectedResult = (Result<Customer>) mock(Result.class);
 		CustomerRequest customerRequest = mock(CustomerRequest.class);
 		when(customerDao.updateCustomer(customerId, customerRequest))
 				.thenReturn(expectedResult);
@@ -79,8 +78,7 @@ public class CustomerServiceTest {
 	public void getCustomerById() {
 		// given
 		String customerId = "id";
-		ResourceCollection<Customer> expectedResult = (ResourceCollection<Customer>) Mockito
-				.mock(ResourceCollection.class);
+		ResourceCollection<Customer> expectedResult = (ResourceCollection<Customer>) mock(ResourceCollection.class);
 		when(customerDao.getCustomerById(customerId))
 				.thenReturn(expectedResult);
 
@@ -96,9 +94,8 @@ public class CustomerServiceTest {
 	public void shouldGetCustomerIds() {
 		// given
 		String[] expectedIds = new String[] { "123", "abc", "4d5e6f" };
-		List<Customer> customerList = generateCustomerListByIds(expectedIds); 
-		ResourceCollection<Customer> resourceCollection = (ResourceCollection<Customer>) Mockito
-				.mock(ResourceCollection.class);
+		List<Customer> customerList = generateCustomerListByIds(expectedIds);
+		ResourceCollection<Customer> resourceCollection = (ResourceCollection<Customer>) mock(ResourceCollection.class);
 		when(customerDao.getAllCustomers()).thenReturn(resourceCollection);
 		when(resourceCollection.iterator()).thenReturn(customerList.iterator());
 
@@ -124,5 +121,4 @@ public class CustomerServiceTest {
 		when(customer.getId()).thenReturn(id);
 		return customer;
 	}
-
 }
