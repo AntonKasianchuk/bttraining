@@ -2,11 +2,13 @@ package com.bttraining.facade.converter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Map;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import com.braintreegateway.Customer;
 import com.braintreegateway.CustomerRequest;
@@ -21,21 +23,25 @@ public class CustomerConverterTest {
 	private static final String PHONE = "test_phone";
 	private static final String FAX = "test_fax";
 	private static final String WEBSITE = "test_website";
-	private CustomerInfoDTO expectedCustomerInfoDTO;
 	
 	private final CustomerConverter unit = new CustomerConverter();
 
 	@Test
 	public void shouldConvertCustomerToCustomerDTO() {
-		Customer customer = Mockito.mock(Customer.class);
-		Mockito.when(customer.getFirstName()).thenReturn(FIRST_NAME);
-		Mockito.when(customer.getLastName()).thenReturn(LAST_NAME);
-		Mockito.when(customer.getCompany()).thenReturn(COMPANY);
-		Mockito.when(customer.getEmail()).thenReturn(EMAIL);
-		Mockito.when(customer.getPhone()).thenReturn(PHONE);
-		Mockito.when(customer.getFax()).thenReturn(FAX);
-		Mockito.when(customer.getWebsite()).thenReturn(WEBSITE);
+		// given
+		Customer customer = mock(Customer.class);
+		when(customer.getFirstName()).thenReturn(FIRST_NAME);
+		when(customer.getLastName()).thenReturn(LAST_NAME);
+		when(customer.getCompany()).thenReturn(COMPANY);
+		when(customer.getEmail()).thenReturn(EMAIL);
+		when(customer.getPhone()).thenReturn(PHONE);
+		when(customer.getFax()).thenReturn(FAX);
+		when(customer.getWebsite()).thenReturn(WEBSITE);
+
+		// when
 		CustomerInfoDTO customerDTO = unit.generateCustomerDTO(customer);
+
+		// then
 		assertEquals(customerDTO.getFirstName(), FIRST_NAME);
 		assertEquals(customerDTO.getLastName(), LAST_NAME);
 		assertEquals(customerDTO.getCompany(), COMPANY);
@@ -47,31 +53,40 @@ public class CustomerConverterTest {
 	
 	@Test
 	public void shouldCustomerDTOToConvertCustomerRequest() {
-		CustomerInfoDTO customerInfoDTO = Mockito.mock(CustomerInfoDTO.class);
+		// given
+		CustomerInfoDTO customerInfoDTO = mock(CustomerInfoDTO.class);
+
+		// when
 		CustomerRequest customerRequest = unit.generateCustomerRequest(customerInfoDTO);
-		Mockito.verify(customerInfoDTO).getFirstName();
-		Mockito.verify(customerInfoDTO).getLastName();
-		Mockito.verify(customerInfoDTO).getCompany();
-		Mockito.verify(customerInfoDTO).getEmail();
-		Mockito.verify(customerInfoDTO).getPhone();
-		Mockito.verify(customerInfoDTO).getFax();
-		Mockito.verify(customerInfoDTO).getWebsite();
+
+		// then
+		verify(customerInfoDTO).getFirstName();
+		verify(customerInfoDTO).getLastName();
+		verify(customerInfoDTO).getCompany();
+		verify(customerInfoDTO).getEmail();
+		verify(customerInfoDTO).getPhone();
+		verify(customerInfoDTO).getFax();
+		verify(customerInfoDTO).getWebsite();
 		assertNotNull(customerRequest);
 	}
 
 	@Test
 	public void shouldConvertParametersMapToCustomerDTO() {
+		// given
 		@SuppressWarnings("unchecked")
-		Map<String, String[]> customerParameterMap = Mockito.mock(Map.class);
-		Mockito.when(customerParameterMap.get("first_name")).thenReturn(new String[]{FIRST_NAME});
-		Mockito.when(customerParameterMap.get("last_name")).thenReturn(new String[]{LAST_NAME});
-		Mockito.when(customerParameterMap.get("company")).thenReturn(new String[]{COMPANY});
-		Mockito.when(customerParameterMap.get("email")).thenReturn(new String[]{EMAIL});
-		Mockito.when(customerParameterMap.get("phone")).thenReturn(new String[]{PHONE});
-		Mockito.when(customerParameterMap.get("fax")).thenReturn(new String[]{FAX});
-		Mockito.when(customerParameterMap.get("website")).thenReturn(new String[]{WEBSITE});
-		
+		Map<String, String[]> customerParameterMap = mock(Map.class);
+		when(customerParameterMap.get("first_name")).thenReturn(new String[]{FIRST_NAME});
+		when(customerParameterMap.get("last_name")).thenReturn(new String[]{LAST_NAME});
+		when(customerParameterMap.get("company")).thenReturn(new String[]{COMPANY});
+		when(customerParameterMap.get("email")).thenReturn(new String[]{EMAIL});
+		when(customerParameterMap.get("phone")).thenReturn(new String[]{PHONE});
+		when(customerParameterMap.get("fax")).thenReturn(new String[]{FAX});
+		when(customerParameterMap.get("website")).thenReturn(new String[]{WEBSITE});
+
+		// when
 		CustomerInfoDTO customerDTO = unit.generateCustomerDTO(customerParameterMap);
+
+		// then
 		assertEquals(customerDTO.getFirstName(), FIRST_NAME);
 		assertEquals(customerDTO.getLastName(), LAST_NAME);
 		assertEquals(customerDTO.getCompany(), COMPANY);

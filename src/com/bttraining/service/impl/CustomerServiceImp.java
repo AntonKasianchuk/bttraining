@@ -3,12 +3,10 @@ package com.bttraining.service.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.Customer;
 import com.braintreegateway.CustomerRequest;
 import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Result;
-import com.bttraining.configuration.Configurator;
 import com.bttraining.dao.CustomerDao;
 import com.bttraining.dao.impl.CustomerDaoImpl;
 import com.bttraining.service.CustomerService;
