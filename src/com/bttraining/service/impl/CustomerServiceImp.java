@@ -15,7 +15,6 @@ import com.bttraining.service.CustomerService;
 
 public class CustomerServiceImp implements CustomerService {
 	private CustomerDao customerDao = new CustomerDaoImpl();
-	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
 
 	@Override
 	public Result<Customer> createCustomer(CustomerRequest customerRequest) {
@@ -26,13 +25,11 @@ public class CustomerServiceImp implements CustomerService {
 	@Override
 	public Result<Customer> updateCustomer(String customerId,
 			CustomerRequest customerRequest) {
-		Result<Customer> result = gateway.customer().update(customerId,
-				customerRequest);
+		Result<Customer> result = customerDao.updateCustomer(customerId, customerRequest);
 		return result;
 	}
 
-	@Override
-	public ResourceCollection<Customer> getAllCustomers() {
+	private ResourceCollection<Customer> getAllCustomers() {
 		ResourceCollection<Customer> customers = customerDao.getAllCustomers();
 		return customers;
 	}
@@ -52,5 +49,10 @@ public class CustomerServiceImp implements CustomerService {
 		ResourceCollection<Customer> customers = customerDao
 				.getCustomerById(customerId);
 		return customers;
+	}
+
+	@Override
+	public void setDao(CustomerDao customerDao) {
+		this.customerDao = customerDao;
 	}
 }
