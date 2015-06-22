@@ -6,6 +6,7 @@ import com.braintreegateway.Customer;
 import com.braintreegateway.CustomerRequest;
 import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Result;
+import com.bttraining.dao.CustomerDao;
 
 public interface CustomerService {
 	Result<Customer> createCustomer(CustomerRequest customerRequest);
@@ -13,9 +14,9 @@ public interface CustomerService {
 	Result<Customer> updateCustomer(String customerId,
 			CustomerRequest customerRequest);
 
-	ResourceCollection<Customer> getAllCustomers();
-
-	ResourceCollection<Customer> getCustomerById(String cutomerId);
+	ResourceCollection<Customer> getCustomerById(String customerId);
 
 	Set<String> getCustomerIds();
+	
+	void setDao(CustomerDao customerDao);
 }
