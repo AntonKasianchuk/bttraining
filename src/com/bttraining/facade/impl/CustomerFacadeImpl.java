@@ -65,7 +65,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		if (isSuccess) {
 			Customer customer = customerResult.getTarget();
 			String clientToken = registerService
-					.getClientTokenByCustomer(customer);
+					.getClientTokenByCustomer(customer.getId());
 			customerRegisterDTO.setClientToken(clientToken);
 		}
 		customerRegisterDTO.setSuccess(isSuccess);
@@ -90,7 +90,8 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		ResourceCollection<Customer> customerCollection = customerService
 				.getCustomerById(customerId);
 		Customer customer = customerCollection.getFirst();
-		String clientToken = registerService.getClientTokenByCustomer(customer);
+		String clientToken = registerService.getClientTokenByCustomer(customer
+				.getId());
 		return clientToken;
 	}
 }
