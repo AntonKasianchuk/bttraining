@@ -1,6 +1,5 @@
 package com.bttraining.service;
 
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -37,8 +36,8 @@ public class CustomerServiceTest {
 
 	@Before
 	public void setUp() {
-		// MockitoAnnotations.initMocks(this); // if the test case cannot be run
-		// with Mockito JUnitRunner
+		// if the test case cannot be run with Mockito JUnitRunner
+		// MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
