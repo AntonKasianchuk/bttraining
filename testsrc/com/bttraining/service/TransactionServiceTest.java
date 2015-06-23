@@ -109,7 +109,7 @@ public class TransactionServiceTest {
 		Result<Transaction> expectedResult = (Result<Transaction>) mock(Result.class);
 		TransactionGateway transaction = mock(TransactionGateway.class);
 		when(braintreeGateway.transaction()).thenReturn(transaction);
-		when(transaction.voidTransaction(transactionId)).thenReturn(
+		when(transaction.refund(transactionId)).thenReturn(
 				expectedResult);
 
 		// when
