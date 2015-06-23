@@ -11,7 +11,7 @@ import com.bttraining.dao.CustomerDao;
 import com.bttraining.dao.impl.CustomerDaoImpl;
 import com.bttraining.service.CustomerService;
 
-public class CustomerServiceImp implements CustomerService {
+public class CustomerServiceImpl implements CustomerService {
 	private CustomerDao customerDao = new CustomerDaoImpl();
 
 	@Override

@@ -11,14 +11,14 @@ import com.bttraining.facade.CustomerFacade;
 import com.bttraining.facade.converter.CustomerConverter;
 import com.bttraining.service.CustomerService;
 import com.bttraining.service.RegisterService;
-import com.bttraining.service.impl.CustomerServiceImp;
+import com.bttraining.service.impl.CustomerServiceImpl;
 import com.bttraining.service.impl.RegisterServiceImpl;
 import com.bttraining.web.dto.CustomerInfoDTO;
 import com.bttraining.web.dto.CustomerDTO;
 import com.bttraining.web.dto.CustomerRegisterDTO;
 
 public class CustomerFacadeImpl implements CustomerFacade {
-	private CustomerService customerService = new CustomerServiceImp();
+	private CustomerService customerService = new CustomerServiceImpl();
 	private RegisterService registerService = new RegisterServiceImpl();
 	private CustomerConverter customerConverter = new CustomerConverter();
 

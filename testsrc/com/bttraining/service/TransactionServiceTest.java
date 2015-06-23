@@ -109,12 +109,12 @@ public class TransactionServiceTest {
 		Result<Transaction> expectedResult = (Result<Transaction>) mock(Result.class);
 		TransactionGateway transaction = mock(TransactionGateway.class);
 		when(braintreeGateway.transaction()).thenReturn(transaction);
-		when(transaction.submitForSettlement(transactionId)).thenReturn(
+		when(transaction.voidTransaction(transactionId)).thenReturn(
 				expectedResult);
 
 		// when
 		Result<Transaction> actualResult = transactionService
-				.submitTransactionForSettlement(transactionId);
+				.refundTransaction(transactionId);
 
 		// then
 		assertEquals(expectedResult, actualResult);
