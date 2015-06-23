@@ -24,7 +24,6 @@ import com.braintreegateway.Result;
 import com.bttraining.dao.CustomerDao;
 import com.bttraining.service.impl.CustomerServiceImp;
 
-@SuppressWarnings("unchecked")
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceTest {
 
@@ -37,12 +36,13 @@ public class CustomerServiceTest {
 	@Before
 	public void setUp() {
 		// if the test case cannot be run with Mockito JUnitRunner
-		// MockitoAnnotations.initMocks(this);
+		//MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
 	public void shouldCreateCustomer() {
 		// given
+		@SuppressWarnings("unchecked")
 		Result<Customer> expectedResult = (Result<Customer>) mock(Result.class);
 		CustomerRequest customerRequest = mock(CustomerRequest.class);
 		when(customerDao.createCustomer(customerRequest)).thenReturn(
@@ -60,6 +60,7 @@ public class CustomerServiceTest {
 	public void shouldUpdateCustomer() {
 		// given
 		String customerId = "id";
+		@SuppressWarnings("unchecked")
 		Result<Customer> expectedResult = (Result<Customer>) mock(Result.class);
 		CustomerRequest customerRequest = mock(CustomerRequest.class);
 		when(customerDao.updateCustomer(customerId, customerRequest))
@@ -77,6 +78,7 @@ public class CustomerServiceTest {
 	public void getCustomerById() {
 		// given
 		String customerId = "id";
+		@SuppressWarnings("unchecked")
 		ResourceCollection<Customer> expectedResult = (ResourceCollection<Customer>) mock(ResourceCollection.class);
 		when(customerDao.getCustomerById(customerId))
 				.thenReturn(expectedResult);
@@ -94,6 +96,7 @@ public class CustomerServiceTest {
 		// given
 		String[] expectedIds = new String[] { "123", "abc", "4d5e6f" };
 		List<Customer> customerList = generateCustomerListByIds(expectedIds);
+		@SuppressWarnings("unchecked")
 		ResourceCollection<Customer> resourceCollection = (ResourceCollection<Customer>) mock(ResourceCollection.class);
 		when(customerDao.getAllCustomers()).thenReturn(resourceCollection);
 		when(resourceCollection.iterator()).thenReturn(customerList.iterator());
