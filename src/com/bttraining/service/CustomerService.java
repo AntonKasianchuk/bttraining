@@ -6,7 +6,6 @@ import com.braintreegateway.Customer;
 import com.braintreegateway.CustomerRequest;
 import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Result;
-import com.bttraining.dao.CustomerDao;
 
 public interface CustomerService {
 	Result<Customer> createCustomer(CustomerRequest customerRequest);
