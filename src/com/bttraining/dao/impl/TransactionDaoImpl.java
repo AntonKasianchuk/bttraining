@@ -13,4 +13,8 @@ public class TransactionDaoImpl implements TransactionDao {
 		Transaction transaction = gateway.transaction().find(transactionId);
 		return transaction;
 	}
+	
+	public void setGateway(BraintreeGateway gateway) {
+		this.gateway = gateway;
+	}
 }
