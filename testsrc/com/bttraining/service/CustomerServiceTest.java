@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -21,28 +20,26 @@ import com.braintreegateway.Customer;
 import com.braintreegateway.CustomerRequest;
 import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Result;
-import com.bttraining.dao.CustomerDao;
-import com.bttraining.service.impl.CustomerServiceImp;
+import com.bttraining.dao.CustomerDAO;
+import com.bttraining.service.impl.CustomerServiceImpl;
 
-@SuppressWarnings("unchecked")
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceTest {
 
+	private static final String CUSTOMER_ID = "TEST_CUSTOMER_ID";
+	private static final String[] CUSTOMER_IDS = { "TEST_CUSTOMER_ID1",
+			"TEST_CUSTOMER_ID2", "TEST_CUSTOMER_ID3" };
+
 	@Mock
-	private CustomerDao customerDao;
+	private CustomerDAO customerDao;
 
 	@InjectMocks
-	private CustomerService customerService = new CustomerServiceImp();
-
-	@Before
-	public void setUp() {
-		// if the test case cannot be run with Mockito JUnitRunner
-		// MockitoAnnotations.initMocks(this);
-	}
+	private CustomerService customerService = new CustomerServiceImpl();
 
 	@Test
 	public void shouldCreateCustomer() {
 		// given
+		@SuppressWarnings("unchecked")
 		Result<Customer> expectedResult = (Result<Customer>) mock(Result.class);
 		CustomerRequest customerRequest = mock(CustomerRequest.class);
 		when(customerDao.createCustomer(customerRequest)).thenReturn(
@@ -59,15 +56,15 @@ public class CustomerServiceTest {
 	@Test
 	public void shouldUpdateCustomer() {
 		// given
-		String customerId = "id";
+		@SuppressWarnings("unchecked")
 		Result<Customer> expectedResult = (Result<Customer>) mock(Result.class);
 		CustomerRequest customerRequest = mock(CustomerRequest.class);
-		when(customerDao.updateCustomer(customerId, customerRequest))
+		when(customerDao.updateCustomer(CUSTOMER_ID, customerRequest))
 				.thenReturn(expectedResult);
 
 		// when
 		Result<Customer> actualResult = customerService.updateCustomer(
-				customerId, customerRequest);
+				CUSTOMER_ID, customerRequest);
 
 		// then
 		Assert.assertEquals(expectedResult, actualResult);
@@ -76,14 +73,14 @@ public class CustomerServiceTest {
 	@Test
 	public void getCustomerById() {
 		// given
-		String customerId = "id";
+		@SuppressWarnings("unchecked")
 		ResourceCollection<Customer> expectedResult = (ResourceCollection<Customer>) mock(ResourceCollection.class);
-		when(customerDao.getCustomerById(customerId))
-				.thenReturn(expectedResult);
+		when(customerDao.getCustomerById(CUSTOMER_ID)).thenReturn(
+				expectedResult);
 
 		// when
 		ResourceCollection<Customer> actualResult = customerService
-				.getCustomerById(customerId);
+				.getCustomerById(CUSTOMER_ID);
 
 		// then
 		Assert.assertEquals(expectedResult, actualResult);
@@ -92,8 +89,8 @@ public class CustomerServiceTest {
 	@Test
 	public void shouldGetCustomerIds() {
 		// given
-		String[] expectedIds = new String[] { "123", "abc", "4d5e6f" };
-		List<Customer> customerList = generateCustomerListByIds(expectedIds);
+		List<Customer> customerList = generateCustomerListByIds(CUSTOMER_IDS);
+		@SuppressWarnings("unchecked")
 		ResourceCollection<Customer> resourceCollection = (ResourceCollection<Customer>) mock(ResourceCollection.class);
 		when(customerDao.getAllCustomers()).thenReturn(resourceCollection);
 		when(resourceCollection.iterator()).thenReturn(customerList.iterator());
@@ -102,7 +99,7 @@ public class CustomerServiceTest {
 		Set<String> actualIdSet = customerService.getCustomerIds();
 
 		// then
-		Set<String> expectedIdSet = new HashSet<>(Arrays.asList(expectedIds));
+		Set<String> expectedIdSet = new HashSet<>(Arrays.asList(CUSTOMER_IDS));
 		Assert.assertEquals(expectedIdSet, actualIdSet);
 	}
 

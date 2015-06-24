@@ -16,6 +16,14 @@ public class TransactionFacadeImpl implements TransactionFacade {
 	private TransactionService transactionService = new TransactionServiceImpl();
 	private TransactionConverter transactionConverter = new TransactionConverter();
 
+	public void setTransactionService(TransactionService transactionService) {
+		this.transactionService = transactionService;
+	}
+
+	public void setTransactionConverter(TransactionConverter transactionConverter) {
+		this.transactionConverter = transactionConverter;
+	}
+
 	@Override
 	public TransactionDTO doTransactionByMethodNonceAndAmount(
 			String methodNonce, String amountString) {
@@ -58,9 +66,9 @@ public class TransactionFacadeImpl implements TransactionFacade {
 	@Override
 	public Set<TransactionInfoDTO> getTransactionInfoDTOsByCustomerId(
 			String customerId) {
+		Set<TransactionInfoDTO> result = new HashSet<TransactionInfoDTO>();
 		Set<Transaction> transactions = transactionService
 				.getTransactionsByCustomerId(customerId);
-		Set<TransactionInfoDTO> result = new HashSet<TransactionInfoDTO>();
 		for (Transaction transaction : transactions) {
 			TransactionInfoDTO transactionDTO = transactionConverter
 					.generateTransactionDTO(transaction);

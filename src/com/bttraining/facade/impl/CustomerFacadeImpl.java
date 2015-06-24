@@ -11,14 +11,14 @@ import com.bttraining.facade.CustomerFacade;
 import com.bttraining.facade.converter.CustomerConverter;
 import com.bttraining.service.CustomerService;
 import com.bttraining.service.RegisterService;
-import com.bttraining.service.impl.CustomerServiceImp;
+import com.bttraining.service.impl.CustomerServiceImpl;
 import com.bttraining.service.impl.RegisterServiceImpl;
 import com.bttraining.web.dto.CustomerInfoDTO;
 import com.bttraining.web.dto.CustomerDTO;
 import com.bttraining.web.dto.CustomerRegisterDTO;
 
 public class CustomerFacadeImpl implements CustomerFacade {
-	private CustomerService customerService = new CustomerServiceImp();
+	private CustomerService customerService = new CustomerServiceImpl();
 	private RegisterService registerService = new RegisterServiceImpl();
 	private CustomerConverter customerConverter = new CustomerConverter();
 
@@ -41,31 +41,31 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	@Override
 	public CustomerDTO updateCustomer(String customerId,
 			Map<String, String[]> customerParameterMap) {
-		CustomerDTO customerEditDTO = new CustomerDTO();
+		CustomerDTO customerDTO = new CustomerDTO();
 
-		CustomerInfoDTO customerDTO = generateCustomerDTO(customerParameterMap);
-		CustomerRequest customerRequest = generateCustomerRequest(customerDTO);
+		CustomerInfoDTO customerInfoDTO = generateCustomerDTO(customerParameterMap);
+		CustomerRequest customerRequest = generateCustomerRequest(customerInfoDTO);
 
 		Result<Customer> customerResult = customerService.updateCustomer(
 				customerId, customerRequest);
-		customerEditDTO.setCustomerInfoDTO(customerDTO);
-		customerEditDTO.setSuccess(customerResult.isSuccess());
-		return customerEditDTO;
+		customerDTO.setCustomerInfoDTO(customerInfoDTO);
+		customerDTO.setSuccess(customerResult.isSuccess());
+		return customerDTO;
 	}
 
 	@Override
 	public CustomerRegisterDTO createCustomer(
 			Map<String, String[]> customerParameterMap) {
 		CustomerRegisterDTO customerRegisterDTO = new CustomerRegisterDTO();
-		CustomerInfoDTO customerDTO = generateCustomerDTO(customerParameterMap);
-		CustomerRequest customerRequest = generateCustomerRequest(customerDTO);
+		CustomerInfoDTO customerInfoDTO = generateCustomerDTO(customerParameterMap);
+		CustomerRequest customerRequest = generateCustomerRequest(customerInfoDTO);
 		Result<Customer> customerResult = customerService
 				.createCustomer(customerRequest);
 		boolean isSuccess = customerResult.isSuccess();
 		if (isSuccess) {
 			Customer customer = customerResult.getTarget();
 			String clientToken = registerService
-					.getClientTokenByCustomer(customer);
+					.getClientTokenByCustomer(customer.getId());
 			customerRegisterDTO.setClientToken(clientToken);
 		}
 		customerRegisterDTO.setSuccess(isSuccess);
@@ -79,9 +79,9 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		return customerDTO;
 	}
 
-	private CustomerRequest generateCustomerRequest(CustomerInfoDTO customerDTO) {
+	private CustomerRequest generateCustomerRequest(CustomerInfoDTO customerInfoDTO) {
 		CustomerRequest customerRequest = customerConverter
-				.generateCustomerRequest(customerDTO);
+				.generateCustomerRequest(customerInfoDTO);
 		return customerRequest;
 	}
 
@@ -90,7 +90,8 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		ResourceCollection<Customer> customerCollection = customerService
 				.getCustomerById(customerId);
 		Customer customer = customerCollection.getFirst();
-		String clientToken = registerService.getClientTokenByCustomer(customer);
+		String clientToken = registerService.getClientTokenByCustomer(customer
+				.getId());
 		return clientToken;
 	}
 }

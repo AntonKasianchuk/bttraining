@@ -15,6 +15,10 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/junit-4.12.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/mockito-all-1.9.5.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/mockito-all-1.10.19.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/powermock-mockito-1.6.2-full.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/cglib-nodep-2.2.2.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/javassist-3.19.0-GA.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/objenesis-2.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

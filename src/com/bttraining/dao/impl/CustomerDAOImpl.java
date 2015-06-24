@@ -7,10 +7,11 @@ import com.braintreegateway.CustomerSearchRequest;
 import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Result;
 import com.bttraining.configuration.Configurator;
-import com.bttraining.dao.CustomerDao;
+import com.bttraining.dao.CustomerDAO;
 
-public class CustomerDaoImpl implements CustomerDao {
+public class CustomerDAOImpl implements CustomerDAO {
 	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
+	private static final String EMPTY_CUSTOMER_ID = "";
 
 	@Override
 	public Result<Customer> createCustomer(CustomerRequest customerRequest) {
@@ -28,7 +29,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	public ResourceCollection<Customer> getAllCustomers() {
-		CustomerSearchRequest request = new CustomerSearchRequest().id().is("");
+		CustomerSearchRequest request = new CustomerSearchRequest().id().is(EMPTY_CUSTOMER_ID);
 		ResourceCollection<Customer> customers = gateway.customer().search(
 				request);
 		return customers;
