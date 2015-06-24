@@ -41,24 +41,24 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	@Override
 	public CustomerDTO updateCustomer(String customerId,
 			Map<String, String[]> customerParameterMap) {
-		CustomerDTO customerEditDTO = new CustomerDTO();
+		CustomerDTO customerDTO = new CustomerDTO();
 
-		CustomerInfoDTO customerDTO = generateCustomerDTO(customerParameterMap);
-		CustomerRequest customerRequest = generateCustomerRequest(customerDTO);
+		CustomerInfoDTO customerInfoDTO = generateCustomerDTO(customerParameterMap);
+		CustomerRequest customerRequest = generateCustomerRequest(customerInfoDTO);
 
 		Result<Customer> customerResult = customerService.updateCustomer(
 				customerId, customerRequest);
-		customerEditDTO.setCustomerInfoDTO(customerDTO);
-		customerEditDTO.setSuccess(customerResult.isSuccess());
-		return customerEditDTO;
+		customerDTO.setCustomerInfoDTO(customerInfoDTO);
+		customerDTO.setSuccess(customerResult.isSuccess());
+		return customerDTO;
 	}
 
 	@Override
 	public CustomerRegisterDTO createCustomer(
 			Map<String, String[]> customerParameterMap) {
 		CustomerRegisterDTO customerRegisterDTO = new CustomerRegisterDTO();
-		CustomerInfoDTO customerDTO = generateCustomerDTO(customerParameterMap);
-		CustomerRequest customerRequest = generateCustomerRequest(customerDTO);
+		CustomerInfoDTO customerInfoDTO = generateCustomerDTO(customerParameterMap);
+		CustomerRequest customerRequest = generateCustomerRequest(customerInfoDTO);
 		Result<Customer> customerResult = customerService
 				.createCustomer(customerRequest);
 		boolean isSuccess = customerResult.isSuccess();
@@ -79,9 +79,9 @@ public class CustomerFacadeImpl implements CustomerFacade {
 		return customerDTO;
 	}
 
-	private CustomerRequest generateCustomerRequest(CustomerInfoDTO customerDTO) {
+	private CustomerRequest generateCustomerRequest(CustomerInfoDTO customerInfoDTO) {
 		CustomerRequest customerRequest = customerConverter
-				.generateCustomerRequest(customerDTO);
+				.generateCustomerRequest(customerInfoDTO);
 		return customerRequest;
 	}
 
