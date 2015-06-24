@@ -32,7 +32,7 @@
 					<td>${transaction.paymentInformation}</td>
 					<td>${transaction.amount}</td>
 					<td><c:choose>
-							<c:when test="${transaction.status eq 'SUBMITTED_FOR_SETTLEMENT' or transaction.status == 'AUTHORIZED'}">
+							<c:when test="${(transaction.status eq 'SUBMITTED_FOR_SETTLEMENT') or (transaction.status eq 'AUTHORIZED')}">
 								<a href="javascript:action('${transaction.id}', 'cancelPayment')">Cancel Payment</a>
 							</c:when>
 							<c:when test="${transaction.status eq 'SETTLED'}">
