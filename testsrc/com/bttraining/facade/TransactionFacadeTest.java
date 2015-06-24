@@ -55,7 +55,7 @@ public class TransactionFacadeTest {
 
 	@SuppressWarnings("unchecked")
 	@Before
-	public void init() {
+	public void setUp() {
 		expectedTransactionDTO = mock(TransactionDTO.class);
 		transactionResult = (Result<Transaction>) mock(Result.class);
 		transaction = mock(Transaction.class);
@@ -133,7 +133,8 @@ public class TransactionFacadeTest {
 	}
 
 	@Test
-	public void shouldRetrieveTransactionInfoDTOsByCustomerId() throws Exception {
+	public void shouldRetrieveTransactionInfoDTOsByCustomerId()
+			throws Exception {
 		// given
 		@SuppressWarnings("unchecked")
 		HashSet<TransactionInfoDTO> expectedTransactionInfoDTOSet = (HashSet<TransactionInfoDTO>) mock(HashSet.class);
@@ -157,9 +158,9 @@ public class TransactionFacadeTest {
 				.getTransactionInfoDTOsByCustomerId(CUSTOMER_ID);
 
 		// then
-		verify(expectedTransactionInfoDTOSet, times(1)).add(
-				transactionInfoDTO);
-		Assert.assertEquals(expectedTransactionInfoDTOSet, actualTransactionInfoDTOSet);
+		verify(expectedTransactionInfoDTOSet, times(1)).add(transactionInfoDTO);
+		Assert.assertEquals(expectedTransactionInfoDTOSet,
+				actualTransactionInfoDTOSet);
 	}
 
 	@Test
