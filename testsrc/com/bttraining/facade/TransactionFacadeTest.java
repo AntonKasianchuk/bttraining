@@ -3,6 +3,8 @@ package com.bttraining.facade;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import org.junit.Assert;
@@ -28,7 +30,7 @@ public class TransactionFacadeTest {
 	private static final String METHOD_NONCE = "TEST_METHOD_NONCE";
 	private static final String AMOUNT = "TEST_AMOUNT";
 	private static final String TRANSACTION_ID = "TEST_TRANSACTION_ID";
-	private static final String TRANSACTION_STATUS = "TEST_TRANSACTION_STATUS";
+	private static final String TRANSACTION_STATUS = "SETTLED";
 	private static final Boolean SUCCESS = Boolean.TRUE;
 
 	@Mock
@@ -57,17 +59,17 @@ public class TransactionFacadeTest {
 		Status status = Transaction.Status.SETTLED;
 		when(transaction.getStatus()).thenReturn(status);
 		when(transactionResult.isSuccess()).thenReturn(SUCCESS);
-		doNothing().when(expectedTransactionDTO).setTransactionId(
-				TRANSACTION_ID);
-		doNothing().when(expectedTransactionDTO).setTransactionStatus(
-				TRANSACTION_STATUS);
-		doNothing().when(expectedTransactionDTO).setSuccess(SUCCESS);
 
 		// when
 		TransactionDTO actualTransactionDTO = transactionFacade
 				.doTransactionByMethodNonceAndAmount(METHOD_NONCE, AMOUNT);
 
 		// then
+		verify(expectedTransactionDTO, times(1)).setTransactionId(
+				TRANSACTION_ID);
+		verify(expectedTransactionDTO, times(1)).setTransactionStatus(
+				TRANSACTION_STATUS);
+		verify(expectedTransactionDTO, times(1)).setSuccess(SUCCESS);
 		Assert.assertEquals(expectedTransactionDTO, actualTransactionDTO);
 	}
 }
