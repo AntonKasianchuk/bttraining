@@ -16,6 +16,14 @@ public class TransactionFacadeImpl implements TransactionFacade {
 	private TransactionService transactionService = new TransactionServiceImpl();
 	private TransactionConverter transactionConverter = new TransactionConverter();
 
+	public void setTransactionService(TransactionService transactionService) {
+		this.transactionService = transactionService;
+	}
+
+	public void setTransactionConverter(TransactionConverter transactionConverter) {
+		this.transactionConverter = transactionConverter;
+	}
+
 	@Override
 	public TransactionDTO doTransactionByMethodNonceAndAmount(
 			String methodNonce, String amountString) {
