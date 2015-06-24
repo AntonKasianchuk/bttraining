@@ -18,6 +18,8 @@ import com.bttraining.dao.impl.TransactionDaoImpl;
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionDAOTest {
 
+	private static final String TRANSACTION_ID = "TEST_TRANSACTION_ID";
+
 	@Mock
 	private BraintreeGateway braintreeGateway;
 
@@ -28,15 +30,14 @@ public class TransactionDAOTest {
 	public void shouldGetTransactionById() {
 		// given
 		Transaction expectedTransaction = mock(Transaction.class);
-		String transactionId = "123abc";
 		TransactionGateway transactionGateway = mock(TransactionGateway.class);
 		when(braintreeGateway.transaction()).thenReturn(transactionGateway);
-		when(transactionGateway.find(transactionId)).thenReturn(
+		when(transactionGateway.find(TRANSACTION_ID)).thenReturn(
 				expectedTransaction);
 
 		// when
 		Transaction actualTransaction = transactionDao
-				.getTransactionById(transactionId);
+				.getTransactionById(TRANSACTION_ID);
 
 		// then
 		assertEquals(expectedTransaction, actualTransaction);

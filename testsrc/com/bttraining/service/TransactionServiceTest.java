@@ -34,6 +34,13 @@ import com.bttraining.service.impl.TransactionServiceImpl;
 @PrepareForTest(TransactionServiceImpl.class)
 public class TransactionServiceTest {
 
+	private static final String CUSTOMER_ID = "TEST_CUSTOMER_ID";
+	private static final String PAYMENT_METHOD_NONCE = "TEST_PAYMENT_METHOD_NONCE";
+	private static final String PAYMENT_AMOUNT = "100";
+	private static final String TRANSACTION_ID = "TEST_TRANSACTION_ID";
+	private static final String[] TRANSACTION_IDS = { "TEST_TRANSACTION_ID1",
+			"TEST_TRANSACTION_ID2", "TEST_TRANSACTION_ID3" };
+
 	@Mock
 	private TransactionDao transactionDao;
 
@@ -45,38 +52,39 @@ public class TransactionServiceTest {
 
 	@Test
 	public void shouldDoTransactionByMethodNonceAndAmount() throws Exception {
-		String paymentMethodNonce = "payment_method_nonce";
-		String amount = "1234";
 		@SuppressWarnings("unchecked")
 		Result<Transaction> expectedResult = (Result<Transaction>) mock(Result.class);
 		TransactionRequest transactionRequest = mock(TransactionRequest.class);
-		whenNew(TransactionRequest.class).withNoArguments().thenReturn(transactionRequest);
-		when(transactionRequest.amount(new BigDecimal(amount))).thenReturn(transactionRequest);
-		when(transactionRequest.paymentMethodNonce(paymentMethodNonce)).thenReturn(transactionRequest);
-		
+		whenNew(TransactionRequest.class).withNoArguments().thenReturn(
+				transactionRequest);
+		when(transactionRequest.amount(new BigDecimal(PAYMENT_AMOUNT)))
+				.thenReturn(transactionRequest);
+		when(transactionRequest.paymentMethodNonce(PAYMENT_METHOD_NONCE))
+				.thenReturn(transactionRequest);
+
 		TransactionGateway transaction = mock(TransactionGateway.class);
 		when(braintreeGateway.transaction()).thenReturn(transaction);
-		when(transaction.sale(transactionRequest)).thenReturn(
-				expectedResult);
-		
-		Result<Transaction> actualResult = transactionService.doTransactionByMethodNonceAndAmount(paymentMethodNonce, amount);
+		when(transaction.sale(transactionRequest)).thenReturn(expectedResult);
+
+		Result<Transaction> actualResult = transactionService
+				.doTransactionByMethodNonceAndAmount(PAYMENT_METHOD_NONCE,
+						PAYMENT_AMOUNT);
 		assertEquals(expectedResult, actualResult);
 	}
 
 	@Test
 	public void shouldVoidTransaction() {
 		// given
-		String transactionId = "id";
 		@SuppressWarnings("unchecked")
 		Result<Transaction> expectedResult = (Result<Transaction>) mock(Result.class);
 		TransactionGateway transaction = mock(TransactionGateway.class);
 		when(braintreeGateway.transaction()).thenReturn(transaction);
-		when(transaction.voidTransaction(transactionId)).thenReturn(
+		when(transaction.voidTransaction(TRANSACTION_ID)).thenReturn(
 				expectedResult);
 
 		// when
 		Result<Transaction> actualResult = transactionService
-				.voidTransaction(transactionId);
+				.voidTransaction(TRANSACTION_ID);
 
 		// then
 		assertEquals(expectedResult, actualResult);
@@ -85,17 +93,16 @@ public class TransactionServiceTest {
 	@Test
 	public void shouldSubmitTransactionForSettlement() {
 		// given
-		String transactionId = "id";
 		@SuppressWarnings("unchecked")
 		Result<Transaction> expectedResult = (Result<Transaction>) mock(Result.class);
 		TransactionGateway transaction = mock(TransactionGateway.class);
 		when(braintreeGateway.transaction()).thenReturn(transaction);
-		when(transaction.submitForSettlement(transactionId)).thenReturn(
+		when(transaction.submitForSettlement(TRANSACTION_ID)).thenReturn(
 				expectedResult);
 
 		// when
 		Result<Transaction> actualResult = transactionService
-				.submitTransactionForSettlement(transactionId);
+				.submitTransactionForSettlement(TRANSACTION_ID);
 
 		// then
 		assertEquals(expectedResult, actualResult);
@@ -104,17 +111,15 @@ public class TransactionServiceTest {
 	@Test
 	public void shouldRefundTransaction() {
 		// given
-		String transactionId = "id";
 		@SuppressWarnings("unchecked")
 		Result<Transaction> expectedResult = (Result<Transaction>) mock(Result.class);
 		TransactionGateway transaction = mock(TransactionGateway.class);
 		when(braintreeGateway.transaction()).thenReturn(transaction);
-		when(transaction.refund(transactionId)).thenReturn(
-				expectedResult);
+		when(transaction.refund(TRANSACTION_ID)).thenReturn(expectedResult);
 
 		// when
 		Result<Transaction> actualResult = transactionService
-				.refundTransaction(transactionId);
+				.refundTransaction(TRANSACTION_ID);
 
 		// then
 		assertEquals(expectedResult, actualResult);
@@ -123,35 +128,36 @@ public class TransactionServiceTest {
 	@Test
 	public void shouldGetTransactionsByCustomerId() throws Exception {
 		// given
-		String customerId = "id";
-		String[] expectedTransactionIds = new String[] { "123", "abc", "4d5e6f" };
-		Set<Transaction> expectedTransactionSet = generateExpectedTransactionSet(expectedTransactionIds.length);
-		
+		Set<Transaction> expectedTransactionSet = generateExpectedTransactionSet(TRANSACTION_IDS.length);
+
 		@SuppressWarnings("unchecked")
 		ResourceCollection<Transaction> resourceTransactions = (ResourceCollection<Transaction>) mock(ResourceCollection.class);
 		TransactionSearchRequest transactionSearchRequest = mock(TransactionSearchRequest.class);
-		whenNew(TransactionSearchRequest.class).withNoArguments().thenReturn(transactionSearchRequest);
+		whenNew(TransactionSearchRequest.class).withNoArguments().thenReturn(
+				transactionSearchRequest);
 		@SuppressWarnings("unchecked")
-		TextNode<TransactionSearchRequest> textNode = (TextNode<TransactionSearchRequest>)mock(TextNode.class);
+		TextNode<TransactionSearchRequest> textNode = (TextNode<TransactionSearchRequest>) mock(TextNode.class);
 		when(transactionSearchRequest.customerId()).thenReturn(textNode);
-		when(textNode.is(customerId)).thenReturn(transactionSearchRequest);
+		when(textNode.is(CUSTOMER_ID)).thenReturn(transactionSearchRequest);
 		TransactionGateway transaction = mock(TransactionGateway.class);
 		when(braintreeGateway.transaction()).thenReturn(transaction);
 		when(transaction.search(transactionSearchRequest)).thenReturn(
 				resourceTransactions);
-		List<Transaction> transactionList = generateTransactionListByIds(expectedTransactionIds);
+		List<Transaction> transactionList = generateTransactionListByIds(TRANSACTION_IDS);
 		Iterator<Transaction> iterator = transactionList.iterator();
 		when(resourceTransactions.iterator()).thenReturn(iterator);
-		
-		setTransactionDaoBehaviourWhenGetTxById(expectedTransactionIds, expectedTransactionSet);
-		
-		//when
-		Set<Transaction> actualTransactionSet = transactionService.getTransactionsByCustomerId(customerId);
-		
-		//then
+
+		setTransactionDaoBehaviourWhenGetTxById(TRANSACTION_IDS,
+				expectedTransactionSet);
+
+		// when
+		Set<Transaction> actualTransactionSet = transactionService
+				.getTransactionsByCustomerId(CUSTOMER_ID);
+
+		// then
 		assertEquals(expectedTransactionSet, actualTransactionSet);
 	}
-	
+
 	private List<Transaction> generateTransactionListByIds(String[] ids) {
 		List<Transaction> transactionList = new ArrayList<>(ids.length);
 		for (String id : ids) {
@@ -160,25 +166,28 @@ public class TransactionServiceTest {
 		}
 		return transactionList;
 	}
-	
+
 	private Transaction createTransactionMockAndSetBehaviour(String id) {
 		Transaction transaction = mock(Transaction.class);
 		when(transaction.getId()).thenReturn(id);
 		return transaction;
 	}
-	
-	private Set<Transaction> generateExpectedTransactionSet(int transactionNumber) {
+
+	private Set<Transaction> generateExpectedTransactionSet(
+			int transactionNumber) {
 		Set<Transaction> expectedTransactionSet = new HashSet<>();
 		for (int i = 0; i < transactionNumber; i++) {
 			expectedTransactionSet.add(mock(Transaction.class));
 		}
 		return expectedTransactionSet;
 	}
-	
-	private void setTransactionDaoBehaviourWhenGetTxById(String[] inputIds, Set<Transaction> outputTransactionSet) {
+
+	private void setTransactionDaoBehaviourWhenGetTxById(String[] inputIds,
+			Set<Transaction> outputTransactionSet) {
 		int i = 0;
-		for (Transaction transaction : outputTransactionSet) {			
-			when(transactionDao.getTransactionById(inputIds[i])).thenReturn(transaction);
+		for (Transaction transaction : outputTransactionSet) {
+			when(transactionDao.getTransactionById(inputIds[i])).thenReturn(
+					transaction);
 			i++;
 		}
 	}

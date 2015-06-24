@@ -25,7 +25,6 @@ import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Result;
 import com.bttraining.facade.converter.CustomerConverter;
 import com.bttraining.facade.impl.CustomerFacadeImpl;
-import com.bttraining.facade.impl.TransactionFacadeImpl;
 import com.bttraining.service.CustomerService;
 import com.bttraining.service.RegisterService;
 import com.bttraining.web.dto.CustomerDTO;
@@ -36,6 +35,10 @@ import com.bttraining.web.dto.CustomerRegisterDTO;
 @PrepareForTest(CustomerFacadeImpl.class)
 public class CustomerFacadeTest {
 
+	private static final String CUSTOMER_ID = "TEST_CUSTOMER_ID";
+	private static final String[] CUSTOMER_IDS = { "TEST_CUSTOMER_ID1",
+			"TEST_CUSTOMER_ID2", "TEST_CUSTOMER_ID3" };
+	private static final String GENERATED_CLIENT_TOKEN = "TEST_CLIENT_TOKEN";
 	private static final boolean SUCCESS = true;
 
 	@Mock
@@ -51,9 +54,8 @@ public class CustomerFacadeTest {
 	@Test
 	public void shouldGetCustomerIds() {
 		// given
-		String[] expectedCustomerIds = { "123", "456", "1a2b3c" };
 		Set<String> expectedCustomerIdSet = new HashSet<>(
-				Arrays.asList(expectedCustomerIds));
+				Arrays.asList(CUSTOMER_IDS));
 		when(customerService.getCustomerIds())
 				.thenReturn(expectedCustomerIdSet);
 
@@ -68,10 +70,9 @@ public class CustomerFacadeTest {
 	public void shouldGetCustomerDTOById() {
 		// given
 		CustomerInfoDTO expectedCustomerInfoDTO = mock(CustomerInfoDTO.class);
-		String customerId = "id";
 		@SuppressWarnings("unchecked")
 		ResourceCollection<Customer> resourceCustomers = (ResourceCollection<Customer>) mock(ResourceCollection.class);
-		when(customerService.getCustomerById(customerId)).thenReturn(
+		when(customerService.getCustomerById(CUSTOMER_ID)).thenReturn(
 				resourceCustomers);
 		Customer customer = mock(Customer.class);
 		when(resourceCustomers.getFirst()).thenReturn(customer);
@@ -80,7 +81,7 @@ public class CustomerFacadeTest {
 
 		// when
 		CustomerInfoDTO actualCustomerInfoDTO = customerFacade
-				.getCustomerDTOById(customerId);
+				.getCustomerDTOById(CUSTOMER_ID);
 
 		// then
 		assertEquals(expectedCustomerInfoDTO, actualCustomerInfoDTO);
@@ -89,30 +90,27 @@ public class CustomerFacadeTest {
 	@Test
 	public void shouldGetClientTokenByCustomerId() {
 		// given
-		String customerId = "id";
-		String expectedClientToken = "client_token";
 		@SuppressWarnings("unchecked")
 		ResourceCollection<Customer> resourceCustomers = (ResourceCollection<Customer>) mock(ResourceCollection.class);
-		when(customerService.getCustomerById(customerId)).thenReturn(
+		when(customerService.getCustomerById(CUSTOMER_ID)).thenReturn(
 				resourceCustomers);
 		Customer customer = mock(Customer.class);
 		when(resourceCustomers.getFirst()).thenReturn(customer);
-		when(customer.getId()).thenReturn(customerId);
-		when(registerService.getClientTokenByCustomer(customerId)).thenReturn(
-				expectedClientToken);
+		when(customer.getId()).thenReturn(CUSTOMER_ID);
+		when(registerService.getClientTokenByCustomer(CUSTOMER_ID)).thenReturn(
+				GENERATED_CLIENT_TOKEN);
 
 		// when
 		String actualClientToken = customerFacade
-				.getClientTokenByCustomerId(customerId);
+				.getClientTokenByCustomerId(CUSTOMER_ID);
 
 		// then
-		assertEquals(expectedClientToken, actualClientToken);
+		assertEquals(GENERATED_CLIENT_TOKEN, actualClientToken);
 	}
 
 	@Test
 	public void shouldUpdateCustomer() throws Exception {
 		// given
-		String customerId = "id";
 		@SuppressWarnings("unchecked")
 		Map<String, String[]> customerParameterMap = (Map<String, String[]>) mock(HashMap.class);
 		CustomerDTO expectedCustomerDTO = mock(CustomerDTO.class);
@@ -127,12 +125,12 @@ public class CustomerFacadeTest {
 		@SuppressWarnings("unchecked")
 		Result<Customer> customerResult = (Result<Customer>) mock(Result.class);
 		when(customerResult.isSuccess()).thenReturn(SUCCESS);
-		when(customerService.updateCustomer(customerId, customerRequest))
+		when(customerService.updateCustomer(CUSTOMER_ID, customerRequest))
 				.thenReturn(customerResult);
 
 		// when
 		CustomerDTO actualCustomerDTO = customerFacade.updateCustomer(
-				customerId, customerParameterMap);
+				CUSTOMER_ID, customerParameterMap);
 
 		// then
 		verify(expectedCustomerDTO).setCustomerInfoDTO(customerInfoDTO);
@@ -143,8 +141,6 @@ public class CustomerFacadeTest {
 	@Test
 	public void shouldCreateCustomer() throws Exception {
 		// given
-		String customerId = "id";
-		String clientToken = "client_token";
 		@SuppressWarnings("unchecked")
 		Map<String, String[]> customerParameterMap = (Map<String, String[]>) mock(HashMap.class);
 		CustomerRegisterDTO expectedCustomerRegisterDTO = mock(CustomerRegisterDTO.class);
@@ -162,9 +158,9 @@ public class CustomerFacadeTest {
 		when(customerResult.isSuccess()).thenReturn(SUCCESS);
 		Customer customer = mock(Customer.class);
 		when(customerResult.getTarget()).thenReturn(customer);
-		when(customer.getId()).thenReturn(customerId);
-		when(registerService.getClientTokenByCustomer(customerId)).thenReturn(
-				clientToken);
+		when(customer.getId()).thenReturn(CUSTOMER_ID);
+		when(registerService.getClientTokenByCustomer(CUSTOMER_ID)).thenReturn(
+				GENERATED_CLIENT_TOKEN);
 		when(customerService.createCustomer(customerRequest)).thenReturn(
 				customerResult);
 
@@ -174,7 +170,8 @@ public class CustomerFacadeTest {
 
 		// then
 		verify(expectedCustomerRegisterDTO).setSuccess(SUCCESS);
-		verify(expectedCustomerRegisterDTO).setClientToken(clientToken);
+		verify(expectedCustomerRegisterDTO).setClientToken(
+				GENERATED_CLIENT_TOKEN);
 		assertEquals(expectedCustomerRegisterDTO, actualCustomerRegisterDTO);
 	}
 }
