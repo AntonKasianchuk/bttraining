@@ -2,6 +2,6 @@ package com.bttraining.dao;
 
 import com.braintreegateway.Transaction;
 
-public interface TransactionDao {
+public interface TransactionDAO {
 	Transaction getTransactionById(String transactionId);
 }

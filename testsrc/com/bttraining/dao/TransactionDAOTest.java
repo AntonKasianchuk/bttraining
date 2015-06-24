@@ -13,7 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.Transaction;
 import com.braintreegateway.TransactionGateway;
-import com.bttraining.dao.impl.TransactionDaoImpl;
+import com.bttraining.dao.impl.TransactionDAOImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionDAOTest {
@@ -24,7 +24,7 @@ public class TransactionDAOTest {
 	private BraintreeGateway braintreeGateway;
 
 	@InjectMocks
-	private TransactionDao transactionDao = new TransactionDaoImpl();
+	private TransactionDAO transactionDao = new TransactionDAOImpl();
 
 	@Test
 	public void shouldGetTransactionById() {

@@ -7,12 +7,12 @@ import com.braintreegateway.Customer;
 import com.braintreegateway.CustomerRequest;
 import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Result;
-import com.bttraining.dao.CustomerDao;
-import com.bttraining.dao.impl.CustomerDaoImpl;
+import com.bttraining.dao.CustomerDAO;
+import com.bttraining.dao.impl.CustomerDAOImpl;
 import com.bttraining.service.CustomerService;
 
 public class CustomerServiceImpl implements CustomerService {
-	private CustomerDao customerDao = new CustomerDaoImpl();
+	private CustomerDAO customerDao = new CustomerDAOImpl();
 
 	@Override
 	public Result<Customer> createCustomer(CustomerRequest customerRequest) {
@@ -49,7 +49,7 @@ public class CustomerServiceImpl implements CustomerService {
 		return customers;
 	}
 
-	public void setCustomerDao(CustomerDao customerDao) {
+	public void setCustomerDao(CustomerDAO customerDao) {
 		this.customerDao = customerDao;
 	}
 }

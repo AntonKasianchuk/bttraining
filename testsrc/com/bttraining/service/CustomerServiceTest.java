@@ -20,7 +20,7 @@ import com.braintreegateway.Customer;
 import com.braintreegateway.CustomerRequest;
 import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Result;
-import com.bttraining.dao.CustomerDao;
+import com.bttraining.dao.CustomerDAO;
 import com.bttraining.service.impl.CustomerServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -31,7 +31,7 @@ public class CustomerServiceTest {
 			"TEST_CUSTOMER_ID2", "TEST_CUSTOMER_ID3" };
 
 	@Mock
-	private CustomerDao customerDao;
+	private CustomerDAO customerDao;
 
 	@InjectMocks
 	private CustomerService customerService = new CustomerServiceImpl();

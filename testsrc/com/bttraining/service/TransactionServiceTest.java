@@ -27,7 +27,7 @@ import com.braintreegateway.Transaction;
 import com.braintreegateway.TransactionGateway;
 import com.braintreegateway.TransactionRequest;
 import com.braintreegateway.TransactionSearchRequest;
-import com.bttraining.dao.TransactionDao;
+import com.bttraining.dao.TransactionDAO;
 import com.bttraining.service.impl.TransactionServiceImpl;
 
 @RunWith(PowerMockRunner.class)
@@ -42,7 +42,7 @@ public class TransactionServiceTest {
 			"TEST_TRANSACTION_ID2", "TEST_TRANSACTION_ID3" };
 
 	@Mock
-	private TransactionDao transactionDao;
+	private TransactionDAO transactionDao;
 
 	@Mock
 	private BraintreeGateway braintreeGateway;

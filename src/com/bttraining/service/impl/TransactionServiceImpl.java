@@ -11,14 +11,14 @@ import com.braintreegateway.Transaction;
 import com.braintreegateway.TransactionRequest;
 import com.braintreegateway.TransactionSearchRequest;
 import com.bttraining.configuration.Configurator;
-import com.bttraining.dao.TransactionDao;
-import com.bttraining.dao.impl.TransactionDaoImpl;
+import com.bttraining.dao.TransactionDAO;
+import com.bttraining.dao.impl.TransactionDAOImpl;
 import com.bttraining.service.TransactionService;
 
 public class TransactionServiceImpl implements TransactionService {
 
 	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
-	private TransactionDao transactionDao = new TransactionDaoImpl();
+	private TransactionDAO transactionDao = new TransactionDAOImpl();
 
 	@Override
 	public Result<Transaction> doTransactionByMethodNonceAndAmount(
@@ -72,7 +72,7 @@ public class TransactionServiceImpl implements TransactionService {
 		return resourceTransactions;
 	}
 
-	public void setTransactionDao(TransactionDao transactionDao) {
+	public void setTransactionDao(TransactionDAO transactionDao) {
 		this.transactionDao = transactionDao;
 	}
 	

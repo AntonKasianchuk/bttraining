@@ -7,9 +7,9 @@ import com.braintreegateway.CustomerSearchRequest;
 import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Result;
 import com.bttraining.configuration.Configurator;
-import com.bttraining.dao.CustomerDao;
+import com.bttraining.dao.CustomerDAO;
 
-public class CustomerDaoImpl implements CustomerDao {
+public class CustomerDAOImpl implements CustomerDAO {
 	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
 	private static final String EMPTY_CUSTOMER_ID = "";
 

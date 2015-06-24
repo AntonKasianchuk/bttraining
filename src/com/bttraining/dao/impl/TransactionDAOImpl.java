@@ -3,9 +3,9 @@ package com.bttraining.dao.impl;
 import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.Transaction;
 import com.bttraining.configuration.Configurator;
-import com.bttraining.dao.TransactionDao;
+import com.bttraining.dao.TransactionDAO;
 
-public class TransactionDaoImpl implements TransactionDao {
+public class TransactionDAOImpl implements TransactionDAO {
 	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
 
 	@Override

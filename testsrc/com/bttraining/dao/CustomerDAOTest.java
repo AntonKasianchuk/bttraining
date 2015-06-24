@@ -20,10 +20,10 @@ import com.braintreegateway.CustomerSearchRequest;
 import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Result;
 import com.braintreegateway.TextNode;
-import com.bttraining.dao.impl.CustomerDaoImpl;
+import com.bttraining.dao.impl.CustomerDAOImpl;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(CustomerDaoImpl.class)
+@PrepareForTest(CustomerDAOImpl.class)
 public class CustomerDAOTest {
 
 	private static final String CUSTOMER_ID = "TEST_CUSTOMER_ID";
@@ -32,7 +32,7 @@ public class CustomerDAOTest {
 	@Mock
 	private BraintreeGateway gateway;
 	@InjectMocks
-	private CustomerDao ñustomerDao = new CustomerDaoImpl();
+	private CustomerDAO ñustomerDao = new CustomerDAOImpl();
 
 	@Test
 	public void shouldCreateCustomer() {

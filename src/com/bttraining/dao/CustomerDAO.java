@@ -5,7 +5,7 @@ import com.braintreegateway.CustomerRequest;
 import com.braintreegateway.ResourceCollection;
 import com.braintreegateway.Result;
 
-public interface CustomerDao {
+public interface CustomerDAO {
 	Result<Customer> createCustomer(CustomerRequest customerRequest);
 
 	Result<Customer> updateCustomer(String customerId,
