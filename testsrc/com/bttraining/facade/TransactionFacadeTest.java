@@ -44,23 +44,28 @@ public class TransactionFacadeTest {
 	public void shouldDoTransactionByMethodNonceAndAmount() throws Exception {
 		// given
 		TransactionDTO expectedTransactionDTO = mock(TransactionDTO.class);
-		whenNew(TransactionDTO.class).withNoArguments().thenReturn(expectedTransactionDTO);
+		whenNew(TransactionDTO.class).withNoArguments().thenReturn(
+				expectedTransactionDTO);
 		@SuppressWarnings("unchecked")
-		Result<Transaction> transactionResult = (Result<Transaction>)mock(Result.class);
-		when(transactionService.doTransactionByMethodNonceAndAmount(METHOD_NONCE, AMOUNT)).thenReturn(transactionResult);
+		Result<Transaction> transactionResult = (Result<Transaction>) mock(Result.class);
+		when(
+				transactionService.doTransactionByMethodNonceAndAmount(
+						METHOD_NONCE, AMOUNT)).thenReturn(transactionResult);
 		Transaction transaction = mock(Transaction.class);
 		when(transactionResult.getTarget()).thenReturn(transaction);
 		when(transaction.getId()).thenReturn(TRANSACTION_ID);
 		Status status = Transaction.Status.SETTLED;
 		when(transaction.getStatus()).thenReturn(status);
-		//when(status.toString()).thenReturn(TRANSACTION_STATUS);
 		when(transactionResult.isSuccess()).thenReturn(SUCCESS);
-		doNothing().when(expectedTransactionDTO).setTransactionId(TRANSACTION_ID);
-		doNothing().when(expectedTransactionDTO).setTransactionStatus(TRANSACTION_STATUS);
+		doNothing().when(expectedTransactionDTO).setTransactionId(
+				TRANSACTION_ID);
+		doNothing().when(expectedTransactionDTO).setTransactionStatus(
+				TRANSACTION_STATUS);
 		doNothing().when(expectedTransactionDTO).setSuccess(SUCCESS);
 
 		// when
-		TransactionDTO actualTransactionDTO = transactionFacade.doTransactionByMethodNonceAndAmount(METHOD_NONCE, AMOUNT);
+		TransactionDTO actualTransactionDTO = transactionFacade
+				.doTransactionByMethodNonceAndAmount(METHOD_NONCE, AMOUNT);
 
 		// then
 		Assert.assertEquals(expectedTransactionDTO, actualTransactionDTO);
