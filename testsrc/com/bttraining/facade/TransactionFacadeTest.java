@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -47,21 +48,30 @@ public class TransactionFacadeTest {
 	@InjectMocks
 	private TransactionFacade transactionFacade = new TransactionFacadeImpl();
 
+	private TransactionDTO expectedTransactionDTO;
+	private Result<Transaction> transactionResult;
+	private Transaction transaction;
+	private Status status;
+
+	@SuppressWarnings("unchecked")
+	@Before
+	public void init() {
+		expectedTransactionDTO = mock(TransactionDTO.class);
+		transactionResult = (Result<Transaction>) mock(Result.class);
+		transaction = mock(Transaction.class);
+		status = Transaction.Status.SETTLED;
+	}
+
 	@Test
 	public void shouldDoTransactionByMethodNonceAndAmount() throws Exception {
 		// given
-		TransactionDTO expectedTransactionDTO = mock(TransactionDTO.class);
 		whenNew(TransactionDTO.class).withNoArguments().thenReturn(
 				expectedTransactionDTO);
-		@SuppressWarnings("unchecked")
-		Result<Transaction> transactionResult = (Result<Transaction>) mock(Result.class);
 		when(
 				transactionService.doTransactionByMethodNonceAndAmount(
 						METHOD_NONCE, AMOUNT)).thenReturn(transactionResult);
-		Transaction transaction = mock(Transaction.class);
 		when(transactionResult.getTarget()).thenReturn(transaction);
 		when(transaction.getId()).thenReturn(TRANSACTION_ID);
-		Status status = Transaction.Status.SETTLED;
 		when(transaction.getStatus()).thenReturn(status);
 		when(transactionResult.isSuccess()).thenReturn(SUCCESS);
 
@@ -81,16 +91,11 @@ public class TransactionFacadeTest {
 	@Test
 	public void shouldSubmitTransactionForSettlement() throws Exception {
 		// given
-		TransactionDTO expectedTransactionDTO = mock(TransactionDTO.class);
 		whenNew(TransactionDTO.class).withNoArguments().thenReturn(
 				expectedTransactionDTO);
-		@SuppressWarnings("unchecked")
-		Result<Transaction> transactionResult = (Result<Transaction>) mock(Result.class);
 		when(transactionService.submitTransactionForSettlement(TRANSACTION_ID))
 				.thenReturn(transactionResult);
-		Transaction transaction = mock(Transaction.class);
 		when(transactionResult.getTarget()).thenReturn(transaction);
-		Status status = Transaction.Status.SETTLED;
 		when(transaction.getStatus()).thenReturn(status);
 		when(transactionResult.isSuccess()).thenReturn(SUCCESS);
 
@@ -108,16 +113,11 @@ public class TransactionFacadeTest {
 	@Test
 	public void shouldVoidTransaction() throws Exception {
 		// given
-		TransactionDTO expectedTransactionDTO = mock(TransactionDTO.class);
 		whenNew(TransactionDTO.class).withNoArguments().thenReturn(
 				expectedTransactionDTO);
-		@SuppressWarnings("unchecked")
-		Result<Transaction> transactionResult = (Result<Transaction>) mock(Result.class);
 		when(transactionService.voidTransaction(TRANSACTION_ID)).thenReturn(
 				transactionResult);
-		Transaction transaction = mock(Transaction.class);
 		when(transactionResult.getTarget()).thenReturn(transaction);
-		Status status = Transaction.Status.SETTLED;
 		when(transaction.getStatus()).thenReturn(status);
 		when(transactionResult.isSuccess()).thenReturn(SUCCESS);
 
@@ -143,7 +143,6 @@ public class TransactionFacadeTest {
 		Set<Transaction> transactionSet = (Set<Transaction>) mock(Set.class);
 		when(transactionService.getTransactionsByCustomerId(CUSTOMER_ID))
 				.thenReturn(transactionSet);
-		Transaction transaction = mock(Transaction.class);
 		@SuppressWarnings("unchecked")
 		Iterator<Transaction> iterator = mock(Iterator.class);
 		when(iterator.hasNext()).thenReturn(true, false);
@@ -166,16 +165,11 @@ public class TransactionFacadeTest {
 	@Test
 	public void shouldRefundTransaction() throws Exception {
 		// given
-		TransactionDTO expectedTransactionDTO = mock(TransactionDTO.class);
 		whenNew(TransactionDTO.class).withNoArguments().thenReturn(
 				expectedTransactionDTO);
-		@SuppressWarnings("unchecked")
-		Result<Transaction> transactionResult = (Result<Transaction>) mock(Result.class);
 		when(transactionService.refundTransaction(TRANSACTION_ID)).thenReturn(
 				transactionResult);
-		Transaction transaction = mock(Transaction.class);
 		when(transactionResult.getTarget()).thenReturn(transaction);
-		Status status = Transaction.Status.SETTLED;
 		when(transaction.getStatus()).thenReturn(status);
 		when(transactionResult.isSuccess()).thenReturn(SUCCESS);
 
