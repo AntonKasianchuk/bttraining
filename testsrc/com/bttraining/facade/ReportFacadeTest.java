@@ -1,4 +1,4 @@
-package com.bttraining.web.dto;
+package com.bttraining.facade;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -22,6 +22,7 @@ import com.bttraining.facade.ReportFacade;
 import com.bttraining.facade.converter.ReportConverter;
 import com.bttraining.facade.impl.ReportFacadeImpl;
 import com.bttraining.service.ReportService;
+import com.bttraining.web.dto.ReportDTO;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(ReportFacadeImpl.class)
