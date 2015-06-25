@@ -72,11 +72,4 @@ public class TransactionServiceImpl implements TransactionService {
 		return resourceTransactions;
 	}
 
-	public void setTransactionDao(TransactionDAO transactionDao) {
-		this.transactionDao = transactionDao;
-	}
-	
-	public void setGateway(BraintreeGateway gateway ) {
-		this.gateway = gateway;
-	}
 }
