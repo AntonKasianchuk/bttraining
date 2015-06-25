@@ -9,10 +9,6 @@ public class RegisterServiceImpl implements RegisterService {
 
 	private BraintreeGateway gateway = Configurator.getBraintreeGateway();
 
-	public void setGateway(BraintreeGateway gateway) {
-		this.gateway = gateway;
-	}
-
 	@Override
 	public String getClientTokenByCustomer(String customerId) {
 		ClientTokenRequest clientTokenRequest = new ClientTokenRequest()
