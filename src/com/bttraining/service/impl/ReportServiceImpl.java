@@ -12,7 +12,9 @@ public class ReportServiceImpl implements ReportService {
 
 	@Override
 	public List<Map<String, String>> getYesterdayReportService() {
-		return reportDAO.getYesterdayReportList();
+		List<Map<String, String>> reportList = reportDAO
+				.getYesterdayReportList();
+		return reportList;
 	}
 
 }
