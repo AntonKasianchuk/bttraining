@@ -14,6 +14,7 @@ public class ReportFacadeImpl implements ReportFacade {
 
 	private ReportService reportService = new ReportServiceImpl();
 	private ReportConverter reportConverter = new ReportConverter();
+
 	@Override
 	public List<ReportDTO> getYesterdayReport() {
 		List<ReportDTO> reportDTOList = new ArrayList<>();
@@ -22,7 +23,6 @@ public class ReportFacadeImpl implements ReportFacade {
 			ReportDTO reportDTO = reportConverter.generateReportDTO(reportMap);
 			reportDTOList.add(reportDTO);
 		}
-		
 		return reportDTOList;
 	}
 
