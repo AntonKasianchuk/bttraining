@@ -49,7 +49,4 @@ public class CustomerServiceImpl implements CustomerService {
 		return customers;
 	}
 
-	public void setCustomerDao(CustomerDAO customerDao) {
-		this.customerDao = customerDao;
-	}
 }
