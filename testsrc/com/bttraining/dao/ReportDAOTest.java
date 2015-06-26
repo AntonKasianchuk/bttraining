@@ -28,6 +28,7 @@ import com.bttraining.dao.impl.ReportDAOImpl;
 public class ReportDAOTest {
 
 	private static final Boolean SUCCESS = Boolean.TRUE;
+	private static final Boolean NOT_SUCCESS = Boolean.FALSE;
 
 	@Mock
 	private BraintreeGateway gateway;
@@ -46,13 +47,30 @@ public class ReportDAOTest {
 		settlementBatchSummaryGateway = mock(SettlementBatchSummaryGateway.class);
 		settlementBatchSummary = mock(SettlementBatchSummary.class);
 	}
+
 	@Test
 	public void shouldRetrieveReportListIfSuccess(){
 		// given
 		when(gateway.settlementBatchSummary()).thenReturn(settlementBatchSummaryGateway);
-		
 		when(settlementBatchSummaryGateway.generate(any(Calendar.class))).thenReturn(result);
 		when(result.isSuccess()).thenReturn(SUCCESS);
+		when(result.getTarget()).thenReturn(settlementBatchSummary);
+		when(settlementBatchSummary.getRecords()).thenReturn(expectedReportList);
+
+		// when
+		List<Map<String,String>> actualReportList = reportDAO.getYesterdayReportList();
+
+		// then
+		assertEquals("It should be the same report list", expectedReportList, actualReportList);
+	}
+
+	@Test
+	public void shouldRetrieveReportListIfUnSuccess(){
+		// given
+		expectedReportList = null;
+		when(gateway.settlementBatchSummary()).thenReturn(settlementBatchSummaryGateway);
+		when(settlementBatchSummaryGateway.generate(any(Calendar.class))).thenReturn(result);
+		when(result.isSuccess()).thenReturn(NOT_SUCCESS);
 		when(result.getTarget()).thenReturn(settlementBatchSummary);
 		when(settlementBatchSummary.getRecords()).thenReturn(expectedReportList);
 
