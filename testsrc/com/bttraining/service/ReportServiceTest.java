@@ -41,6 +41,6 @@ public class ReportServiceTest {
 		// when
 		List<Map<String, String>> actualReportList = reportService.getYesterdayReportService();
 		// given
-		assertEquals("Must be the same report list but it is different", expectedReportList, actualReportList);
+		assertEquals("It should be the same report list", expectedReportList, actualReportList);
 	}
 }

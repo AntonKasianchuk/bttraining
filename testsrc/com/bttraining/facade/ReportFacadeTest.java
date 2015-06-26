@@ -65,6 +65,6 @@ public class ReportFacadeTest {
 		List<ReportDTO> actualReportDTOList = reportFacade.getYesterdayReport();
 
 		// then
-		assertEquals("Must be the same report DTO list but it is different", expectedReportDTOList, actualReportDTOList);
+		assertEquals("It should be the same report DTO list", expectedReportDTOList, actualReportDTOList);
 	}
 }
