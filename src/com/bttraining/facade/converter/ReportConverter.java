@@ -8,7 +8,6 @@ public class ReportConverter {
 
 	public ReportDTO generateReportDTO(Map<String, String> reportMap) {
 		ReportDTO reportDTO = new ReportDTO();
-
 		reportDTO.setKind(reportMap.get("kind"));
 		reportDTO.setMerchantAccountId(reportMap.get("merchant_account_id"));
 		reportDTO.setCardType(reportMap.get("card_type"));
