@@ -1,7 +1,7 @@
 package com.bttraining.dao;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.any;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -22,13 +22,11 @@ import com.braintreegateway.Result;
 import com.braintreegateway.SettlementBatchSummary;
 import com.braintreegateway.SettlementBatchSummaryGateway;
 import com.bttraining.dao.impl.ReportDAOImpl;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Any;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(ReportDAOImpl.class)
 public class ReportDAOTest {
 
-	private static final Calendar CALENDAR = Calendar.getInstance();
 	private static final Boolean SUCCESS = Boolean.TRUE;
 
 	@Mock
@@ -62,6 +60,6 @@ public class ReportDAOTest {
 		List<Map<String,String>> actualReportList = reportDAO.getYesterdayReportList();
 
 		// then
-		assertEquals("It should be same report list", expectedReportList, actualReportList);
+		assertEquals("It should be the same report list", expectedReportList, actualReportList);
 	}
 }
