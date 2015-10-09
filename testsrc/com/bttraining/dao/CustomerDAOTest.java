@@ -32,7 +32,7 @@ public class CustomerDAOTest {
 	@Mock
 	private BraintreeGateway gateway;
 	@InjectMocks
-	private CustomerDAO ñustomerDao = new CustomerDAOImpl();
+	private CustomerDAO customerDao = new CustomerDAOImpl();
 
 	@Test
 	public void shouldCreateCustomer() {
@@ -45,7 +45,7 @@ public class CustomerDAOTest {
 		when(customerGateway.create(customerRequest)).thenReturn(expectedResult);
 
 		// when
-		Result<Customer> actualResult = ñustomerDao.createCustomer(customerRequest);
+		Result<Customer> actualResult = customerDao.createCustomer(customerRequest);
 
 		// then
 		Assert.assertEquals(expectedResult, actualResult);
@@ -62,7 +62,7 @@ public class CustomerDAOTest {
 		when(customerGateway.update(CUSTOMER_ID,customerRequest)).thenReturn(expectedResult);
 
 		// when
-		Result<Customer> actualResult = ñustomerDao.updateCustomer(CUSTOMER_ID, customerRequest);
+		Result<Customer> actualResult = customerDao.updateCustomer(CUSTOMER_ID, customerRequest);
 
 		// then
 		Assert.assertEquals(expectedResult, actualResult);
@@ -88,7 +88,7 @@ public class CustomerDAOTest {
 				expectedResult);
 
 		// when
-		ResourceCollection<Customer> actualResult = ñustomerDao
+		ResourceCollection<Customer> actualResult = customerDao
 				.getAllCustomers();
 
 		// then
@@ -115,7 +115,7 @@ public class CustomerDAOTest {
 				expectedResult);
 
 		// when
-		ResourceCollection<Customer> actualResult = ñustomerDao
+		ResourceCollection<Customer> actualResult = customerDao
 				.getCustomerById(CUSTOMER_ID);
 
 		// then
