@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="bttraining" default="war" basedir=".">
+
+	<target name="init">
+		<tstamp />
+		<property file="build.properties" />
+		<path id="classpath">
+			<pathelement path="${javax-servlet.jar}" />
+			<pathelement path="${junit.jar}" />
+			<pathelement path="${braintree.jar}" />
+			<pathelement path="${log4j.jar}" />
+			<pathelement path="${mockito.jar}" />
+			<pathelement path="${powermock-mockito.jar}" />
+			<pathelement path="${cglib-nodep.jar}" />
+			<pathelement path="${javassist.jar}" />
+			<pathelement path="${objenesis.jar}" />
+			<pathelement path="${hamcrest.jar}" />
+		</path>
+		<property name="classpath" refid="classpath" />
+	</target>
+
+	<target name="startrecorder">
+		<record name="${name}-${DSTAMP}-log.txt" action="start" append="false" />
+	</target>
+
+	<target name="prepare" depends="init, startrecorder">
+		<mkdir dir="${build.dir.classes}" />
+		<mkdir dir="${reports.dir}" />
+	</target>
+
+	<target name="compile" depends="prepare">
+		<echo>Classpath is ${classpath}</echo>
+		<javac destdir="${build.dir.classes}" classpath="${classpath}" compiler="${build.compiler}" debug="on" includeantruntime="false">
+			<src path="${src.dir}" />
+			<src path="${test.src.dir}" />
+		</javac>
+	</target>
+
+	<target name="test" depends="compile">
+		<junit printsummary="yes" haltonfailure="yes" showoutput="yes" failureproperty="testsFailed">
+			<classpath>
+				<pathelement path="${classpath}" />
+				<pathelement path="${build.dir.classes}" />
+			</classpath>
+			<formatter type="xml" />
+			<batchtest fork="yes" todir="${reports.dir}/">
+				<fileset dir="${test.src.dir}">
+					<include name="**/*Test*.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+		<junitreport todir="${reports.dir}">
+			<fileset dir="${reports.dir}" includes="TEST-*.xml"/>
+			<report format="noframes" todir="${reports.dir}"/>
+		</junitreport>
+	</target>
+
+	<target name="war" depends="test" unless="testsFailed">
+		<war destfile="${build.dir}/${war.name}" webxml="web/WEB-INF/web.xml">
+			<fileset dir="web"/>
+			<classes dir="${build.dir.classes}">
+				<include name="**/*.class" />
+				<exclude name="**/*Test*.class" />
+			</classes>
+		</war>
+	</target>
+
+	<target name="stoprecorder">
+	</target>
+
+	<target name="clean" depends="init">
+		<delete dir="${build.dir}" />
+		<delete dir="${reports.dir}" />
+	</target>
+
+</project>
